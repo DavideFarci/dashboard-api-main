@@ -32,9 +32,15 @@ class DateController extends Controller
             $dates = Date::where('visible', true)
                 ->where('year', '>=', $dataInizio->year)
                 ->where('month', '>=', $dataInizio->month)
+                ->where(function ($query) use ($dataInizio) {
+                    $query->where('month', '>', $dataInizio->month)
+                        ->orWhere(function ($query) use ($dataInizio) {
+                            $query->where('month', '=', $dataInizio->month)
+                                ->where('day', '>=', $dataInizio->day);
+                        });
+                })
                 ->where('year', '<=', $dataFine->year)
                 ->where('month', '<=', $dataFine->month)
-                ->where('day', '>=', $dataInizio->day)
                 ->get();
 
             return response()->json([
