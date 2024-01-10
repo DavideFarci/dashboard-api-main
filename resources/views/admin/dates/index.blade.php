@@ -2,7 +2,7 @@
 
 @section('contents')
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
-    <?php $times = ['10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '16:30', '17:00', '17:30', '18:00', '18:30']; ?>
+    <?php $times = ['10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '16:30', '17:00', '17:30', '18:00', '18:30']; $days = [1, 2, 3, 4, 5, 6, 7]?>
 
   
     <div class="row">
@@ -16,9 +16,17 @@
             <label for="max_reservations">N° di posti a sedere</label>
             <input type="number" name="max_reservations">
             
-            <label for="days_off">Giorno/i di chiusura</label>
-            <input type="number" max="7" min="1" name="days_off[]">
+            {{-- <label for="days_off">Giorno/i di chiusura</label>
+            <input type="number" max="7" min="1" name="days_off[]"> --}}
 
+            <div>
+                <div>Seleziona i giorni da disabilitare</div>
+                @foreach ($days as $day)
+                    <label for="days_off_{{ $day }}">{{ $day }}
+                        <input type="checkbox" name="days_off[]" id="days_off_{{ $day }}" value="{{ $day }}">
+                    </label>
+                @endforeach
+            </div>
             <div>
                 <div>Seleziona le fasce orarie disponibili</div>
                 @foreach ($times as $time)

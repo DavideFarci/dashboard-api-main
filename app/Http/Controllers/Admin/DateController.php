@@ -16,6 +16,8 @@ class DateController extends Controller
     {
         $dates = Date::paginate(100);
 
+        @dump($dates[14]);
+
         return view('admin.dates.index', compact('dates'));
     }
 
