@@ -8,11 +8,64 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatesTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
+    protected $max_reservations;
+    protected $times_slot;
+    protected $days_off;
+
+    public function setVariables($max_reservations, $times_slot, $days_off)
+    {
+        $this->max_reservations = $max_reservations;
+        $this->times_slot = $times_slot;
+        $this->days_off = $days_off;
+    }
+
+
+    public function run()
+    {
+        $maxReservation = $this->max_reservations;
+        $startTime = $this->times_slot;
+        $disabledDays = $this->days_off;
+
+        // @dump("max_reservations: " . $maxReservation, "times_slot: " . $startTime, "days_off: " . $disabledDays);
+        // @dd("max_reservations: " . $maxReservation, "times_slot: " . $startTime, "days_off: " . $disabledDays);
+
+        $currentDay = now();
+        $year = $currentDay->year;
+        $month = $currentDay->month;
+        $dayOfWeek = $currentDay->dayOfWeek;
+
+        for ($i = 0; $i < 12; $i++) {
+            $daysInMonth = $currentDay->daysInMonth;
+
+            for ($day = 1; $day <= $daysInMonth; $day++) {
+                if ($dayOfWeek === 7) {
+                    $dayOfWeek = 1;
+                } else {
+                    $dayOfWeek++;
+                }
+
+                foreach ($startTime as $time) {
+                    Date::create([
+                        'reserved' => 0,
+                        'day_w' => $dayOfWeek,
+                        'month' => $month,
+                        'day' => $day,
+                        'time' => $time,
+                        'visible' => (1 && !in_array($dayOfWeek, $disabledDays)),
+                        'max_res' => $maxReservation,
+                        'year' => $year,
+                    ]);
+                }
+            }
+
+            if ($i < 11) {
+                $currentDay->addMonth();
+                $year = $currentDay->year;
+                $month = $currentDay->month;
+            }
+        }
+    }
     // public function run()
     // {
     //     $maxReservation = 5;
@@ -519,47 +572,4 @@ class DatesTableSeeder extends Seeder
     //         }
     //     }
     // }
-
-
-    public function run()
-    {
-        $maxReservation = 5;
-        $startTime = ['10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '16:30', '17:00', '17:30', '18:00', '18:30'];
-
-        $currentDay = now();
-        $year = $currentDay->year;
-        $month = $currentDay->month;
-        $dayOfWeek = $currentDay->dayOfWeek;
-
-        for ($i = 0; $i < 12; $i++) {
-            $daysInMonth = $currentDay->daysInMonth;
-
-            for ($day = 1; $day <= $daysInMonth; $day++) {
-                if ($dayOfWeek === 7) {
-                    $dayOfWeek = 1;
-                } else {
-                    $dayOfWeek++;
-                }
-
-                foreach ($startTime as $time) {
-                    Date::create([
-                        'reserved' => 0,
-                        'day_w' => $dayOfWeek,
-                        'month' => $month,
-                        'day' => $day,
-                        'time' => $time,
-                        'visible' => ($time >= '10:30' && $time <= '13:30'),
-                        'max_res' => $maxReservation,
-                        'year' => $year,
-                    ]);
-                }
-            }
-
-            if ($i < 11) {
-                $currentDay->addMonth();
-                $year = $currentDay->year;
-                $month = $currentDay->month;
-            }
-        }
-    }
 }

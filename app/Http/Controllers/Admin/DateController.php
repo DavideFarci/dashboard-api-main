@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
 use App\Models\Date;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Database\Seeders\DatesTableSeeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DateController extends Controller
 {
@@ -44,5 +48,34 @@ class DateController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function runSeeder(Request $request)
+    {
+        try {
+            $max_reservations = $request->input("max_reservations");
+            $times_slot = $request->input("times_slot");
+            $days_off = $request->input("days_off");
+
+            // @dump("max_reservations: " . $max_reservations, "times_slot: " . $times_slot, "days_off: " . $days_off);
+            // @dd("max_reservations: " . $max_reservations, "times_slot: " . $times_slot, "days_off: " . $days_off);
+
+            // Pulisco la tabella
+            DB::table('dates')->truncate();
+
+            $seeder = new DatesTableSeeder();
+            $seeder->setVariables($max_reservations, $times_slot, $days_off);
+            $seeder->run();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Seeder avvenuto con successo',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Si è verificato un errore durante l\'elaborazione della richiesta: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 }

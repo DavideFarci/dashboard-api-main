@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('date_id')->nullable(); 
+            // $table->unsignedBigInteger('date_id')->nullable(); 
 
-            $table->foreign('date_id')->references('id')->on('dates')->nullOnDelete();
+            // $table->foreign('date_id')->references('id')->on('dates')->nullOnDelete();
+            $table->string('date_slot', 30);
             $table->string('name', 50)->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('status', 10)->nullable();
@@ -34,12 +35,13 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('reservation', function (Blueprint $table) {
-            // Rimuovi la chiave esterna solo se esiste
-            if (Schema::hasColumn('reservation', 'date_id')) {
-                $table->dropForeign(['date_id']);
-                $table->dropColumn('date_id');
-            }
-        });
+        Schema::dropIfExists('dates');
+        // Schema::table('reservation', function (Blueprint $table) {
+        //     // Rimuovi la chiave esterna solo se esiste
+        //     if (Schema::hasColumn('reservation', 'date_id')) {
+        //         $table->dropForeign(['date_id']);
+        //         $table->dropColumn('date_id');
+        //     }
+        // });
     }
 };

@@ -64,11 +64,6 @@ Route::middleware(['auth', 'verified'])
         // Rotte Slot
         Route::post('/slots/toggle-visibility/{slot_id}',   [SlotController::class, 'toggleTimeVisibility'])->name('slots.toggleTimeVisibility');
 
-        // Rotte Date 
-        Route::post('/dates/updatestatus/{order_id}',       [DateController::class, 'updatestatus'])->name('dates.updatestatus');
-        Route::post('/dates/upmaxres/{order_id}',           [DateController::class, 'upmaxres'])->name('dates.upmaxres');
-        Route::post('/dates/downmaxres/{order_id}',         [DateController::class, 'downmaxres'])->name('dates.downmaxres');
-
 
         // Rotte Risources
         Route::resource('dates',        DateController::class);
@@ -80,6 +75,12 @@ Route::middleware(['auth', 'verified'])
         Route::resource('categories',   CategoryController::class);
         Route::resource('tags',         TagController::class);
         Route::resource('hashtags',     HashtagController::class);
+
+        // Rotte Date 
+        Route::post('/dates/updatestatus/{order_id}',       [DateController::class, 'updatestatus'])->name('dates.updatestatus');
+        Route::post('/dates/upmaxres/{order_id}',           [DateController::class, 'upmaxres'])->name('dates.upmaxres');
+        Route::post('/dates/downmaxres/{order_id}',         [DateController::class, 'downmaxres'])->name('dates.downmaxres');
+        Route::post('/dates/runSeeder',                     [DateController::class, 'runSeeder'])->name('dates.runSeeder');
     });
 
 Route::middleware('auth')
