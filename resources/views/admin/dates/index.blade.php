@@ -15,9 +15,6 @@
             @csrf
             <label for="max_reservations">N° di posti a sedere</label>
             <input type="number" name="max_reservations">
-            
-            {{-- <label for="days_off">Giorno/i di chiusura</label>
-            <input type="number" max="7" min="1" name="days_off[]"> --}}
 
             <div>
                 <div>Seleziona i giorni da disabilitare</div>
@@ -27,6 +24,7 @@
                     </label>
                 @endforeach
             </div>
+            
             <div>
                 <div>Seleziona le fasce orarie disponibili</div>
                 @foreach ($times as $time)

@@ -16,8 +16,6 @@ class DateController extends Controller
     {
         $dates = Date::paginate(100);
 
-        @dump($dates[14]);
-
         return view('admin.dates.index', compact('dates'));
     }
 
@@ -59,7 +57,6 @@ class DateController extends Controller
             $times_slot = $request->input("times_slot");
             $days_off = $request->input("days_off");
 
-            // @dump("max_reservations: " . $max_reservations, "times_slot: " . $times_slot, "days_off: " . $days_off);
             // @dd("max_reservations: " . $max_reservations, "times_slot: " . $times_slot, "days_off: " . $days_off);
 
             // Pulisco la tabella
