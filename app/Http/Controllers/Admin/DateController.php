@@ -66,7 +66,7 @@ class DateController extends Controller
             $seeder->setVariables($max_reservations, $times_slot, $days_off);
             $seeder->run();
 
-            return response()->json([
+            return back()->with('success', 'Seeder avvenuto con successo')->with('response', [
                 'success' => true,
                 'message' => 'Seeder avvenuto con successo',
             ]);

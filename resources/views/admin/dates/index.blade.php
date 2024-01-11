@@ -2,13 +2,27 @@
 
 @section('contents')
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
-    <?php $times = ['10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '16:30', '17:00', '17:30', '18:00', '18:30']; $days = [1, 2, 3, 4, 5, 6, 7]?>
-
+    <?php 
+        $times = ['10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '16:30', '17:00', '17:30', '18:00', '18:30']; 
+        $days = [1, 2, 3, 4, 5, 6, 7];
+    ?>
   
     <div class="row">
         <h1 >GESTIONE DATE</h1>
         <a  href="{{ route('admin.reservations.index') }}" class="btn btn-dark">INDIETRO</a>
     </div>
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
 
         {{-- Form per runnare il seeder --}}
         <form class="d-flex flex-column py-5" style="width: 45% !important; " action="{{ route('admin.dates.runSeeder') }}" method="post" enctype="multipart/form-data">
