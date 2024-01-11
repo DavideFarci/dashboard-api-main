@@ -23,10 +23,10 @@ class ReservationController extends Controller
             $newOrder->n_person = intval($data['n_person']);
             $newOrder->message = $data['message'];
             $newOrder->status = 0;
-            $newOrder->date_id = $data['date_id'];
+            $newOrder->date_slot = $data['date_slot'];
 
             // recupero data e orario in questione 
-            $date = Date::where('id', $newOrder->date_id)->firstOrFail();
+            $date = Date::where('id', $data['date_id'])->firstOrFail();
 
             $maximum = $date->reserved + $newOrder->n_person;
 
@@ -43,14 +43,15 @@ class ReservationController extends Controller
                 ]);
             }
 
-            // Salvo la data
+            // Salvo la data e la prenotazione
             $date->save();
+            $newOrder->save();
 
             return response()->json([
                 'success' => true,
                 "prenotazione" => $newOrder,
                 // "reserved" => $date->reserved,
-                // "data" => $date
+                "data" => $date
             ]);
         } catch (QueryException $e) {
             return response()->json([
