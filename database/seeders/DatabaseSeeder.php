@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             SettingsTableSeeder::class,
             TimesTableSeeder::class,
             SlotsTableSeeder::class,
-            DatesTableSeeder::class,
+            //DatesTableSeeder::class,
         ]);
     }
 }
