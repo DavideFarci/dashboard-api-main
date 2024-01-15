@@ -51,16 +51,15 @@ class MonthController extends Controller
     public function show($id)
     {
         $month = Month::where('id', $id)->firstOrFail();
-        //$dates = Date::where('month', $month->n)->firstOrFail();
         $dates = Date::all();
+
         $selectedDate=[];
+        
         foreach ($dates as $date){
-            if($date->month == $month->n){
+            if($date->month == $month->n && $date->year == $month->y){
                 array_push($selectedDate, $date);
             }
         }
-
-
 
         return view('admin.months.show', compact('month', 'selectedDate'));
     }
