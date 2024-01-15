@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SlotController;
 use App\Http\Controllers\Admin\TimeController;
+use App\Http\Controllers\Admin\MonthController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\HashtagController;
 use App\Http\Controllers\Admin\ProjectController;
@@ -65,7 +66,7 @@ Route::middleware(['auth', 'verified'])
         Route::post('/slots/toggle-visibility/{slot_id}',   [SlotController::class, 'toggleTimeVisibility'])->name('slots.toggleTimeVisibility');
 
 
-        // Rotte Risources
+        // Rotte Resource
         Route::resource('dates',        DateController::class);
         Route::resource('slots',        SlotController::class);
         Route::resource('settings',     SettingController::class);
@@ -75,6 +76,7 @@ Route::middleware(['auth', 'verified'])
         Route::resource('categories',   CategoryController::class);
         Route::resource('tags',         TagController::class);
         Route::resource('hashtags',     HashtagController::class);
+        Route::resource('months',       MonthController::class);
 
         // Rotte Date 
         Route::post('/dates/updatestatus/{order_id}',       [DateController::class, 'updatestatus'])->name('dates.updatestatus');

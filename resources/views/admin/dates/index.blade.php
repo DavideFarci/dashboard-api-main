@@ -28,7 +28,7 @@
         <form class="d-flex flex-column py-5" style="width: 45% !important; " action="{{ route('admin.dates.runSeeder') }}" method="post" enctype="multipart/form-data">
             @csrf
             <label for="max_reservations">N° di posti a sedere</label>
-            <input type="number" name="max_reservations">
+            <input type="number" name="max_reservations" value="10">
 
             <div>
                 <div>Seleziona i giorni da disabilitare</div>
