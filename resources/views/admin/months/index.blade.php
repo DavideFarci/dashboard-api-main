@@ -2,7 +2,9 @@
 
 @section('contents')
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
-
+    <?php 
+        @dump($months);
+    ?>
 
 
     <h1>SCEGLI UN MESE</h1>    

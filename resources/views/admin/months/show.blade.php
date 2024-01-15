@@ -2,6 +2,34 @@
 
 @section('contents')
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
+    <?php 
+        // Array risultante
+        $resultArray = [];
+
+        // Raggruppa per day
+        foreach ($selectedDate as $item) {
+            $day = $item['day'];
+            
+            // Se il giorno non esiste nell'array risultante, inizializza l'elemento
+            if (!isset($resultArray[$day])) {
+                $resultArray[$day] = [
+                    'time' => [],
+                    'reserved' => [],
+                    'max_res' => [],
+                    'visible' => [],
+                ];
+            }
+            
+            // Aggiungi i valori di time, reserved e max_res all'array risultante
+            $resultArray[$day]['time'][] = $item['time'];
+            $resultArray[$day]['reserved'][] = $item['reserved'];
+            $resultArray[$day]['max_res'][] = $item['max_res'];
+            $resultArray[$day]['visible'][] = $item['visible'];
+        }
+
+        // Output dei risultati
+        @dump($resultArray)
+    ?>
 
 
 
@@ -28,7 +56,6 @@
             </thead>
             <tbody class="body-cat">
                 @foreach ($selectedDate as $date)
-                    
                     @if($date->day % 2 == 0) 
                     <tr class="bg-blue" >
                         
