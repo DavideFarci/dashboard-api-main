@@ -23,6 +23,7 @@ return new class extends Migration
             $table->tinyInteger('day');
             $table->tinyInteger('day_w');
             $table->string('time');
+            $table->string('date_slot');
             $table->boolean('visible');
             $table->tinyInteger('max_res');
         });

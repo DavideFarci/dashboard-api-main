@@ -26,7 +26,7 @@
                     <tr>
                         <th class="expire-mobile">{{$month->id}}</th>
                         <td>
-                            <a href="{{ route('admin.months.show', ['month' =>$month])  }}" style="color:white" class="ts bs a-notlink badge bg-success rounded-pill"  > {{$month->month}} / {{$month->y}}</a >
+                            <a href="{{ route('admin.days.index', ['month' =>$month->n, 'year' =>$month->y])  }}" style="color:white" class="ts bs a-notlink badge bg-success rounded-pill"  > {{$month->month}} / {{$month->y}}</a >
                            
                         </td>
                     

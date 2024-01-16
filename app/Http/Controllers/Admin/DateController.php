@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Exception;
 use App\Models\Date;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -61,10 +62,26 @@ class DateController extends Controller
 
             // Pulisco la tabella
             DB::table('dates')->truncate();
+            DB::table('months')->truncate();
+            DB::table('days')->truncate();
 
             $seeder = new DatesTableSeeder();
             $seeder->setVariables($max_reservations, $times_slot, $days_off);
             $seeder->run();
+
+            $reservations = Reservation::all();
+            foreach($reservations as $reservation){
+               dump($reservation->date_slot);
+               $dataCorrispondente = Date::where('date_slot', $reservation->date_slot);
+               dump($dataCorrispondente->day);
+               if($dataCorrispondente){
+
+                $dataCorrispondente->reserved += $reservation->n_person;
+                $dataCorrispondente->update();
+               }
+            }
+            
+
 
             return back()->with('success', 'Seeder avvenuto con successo')->with('response', [
                 'success' => true,
@@ -73,7 +90,7 @@ class DateController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'error' => 'Si è verificato un errore durante l\'elaborazione della richiesta: ' . $e->getMessage(),
+                'error' => 'Si e verificato un errore durante l\'elaborazione della richiesta: ' . $e->getMessage(),
             ], 500);
         }
     }

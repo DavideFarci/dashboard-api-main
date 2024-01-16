@@ -42,7 +42,7 @@
 
 
 
-        <table class="mytable">
+        {{-- <table class="mytable">
             <thead>
                 <tr>
 
@@ -123,7 +123,7 @@
             </tbody>
         </table>
 
- 
+  --}}
 
     
 @endsection

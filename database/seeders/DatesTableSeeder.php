@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use DateTime;
+use App\Models\Day;
 use App\Models\Date;
 use App\Models\Month;
 use Illuminate\Database\Seeder;
@@ -44,7 +45,13 @@ class DatesTableSeeder extends Seeder
             ]);
             for ($day = 1; $day <= $daysInMonth; $day++) {
                 $currentDayOfWeek = $currentDate->format('N');
-
+               
+                Day::create([
+                    'day' => $currentDate->format('d'),
+                    'm' => $currentDate->format('n'),
+                    'y' => $currentDate->format('Y'),
+                ]);
+                
                 foreach ($times as $time) {
                    
                     if(!$disabledDays){
@@ -57,7 +64,9 @@ class DatesTableSeeder extends Seeder
                             'max_res' => $maxReservation,
                             'year' => $currentDate->format('Y'),
                             'visible' => 1,
-                
+                            'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time,
+                            
+                            
                         ]);
                     }
                     else {
@@ -70,6 +79,7 @@ class DatesTableSeeder extends Seeder
                             'max_res' => $maxReservation,
                             'year' => $currentDate->format('Y'),
                             'visible' => (1 && !in_array($currentDayOfWeek, $disabledDays)),
+                            'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time,
                 
                         ]);
                     }

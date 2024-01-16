@@ -2,9 +2,9 @@
 
 @section('contents')
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
-    <?php 
-        @dump($months);
-    ?>
+    
+        @dump($days);
+    
 
 
     <h1>SCEGLI UN MESE</h1>    
@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                    
-                    <th>MESE</th>
+                    <th>GIORNI</th>
 
                     <th>
                         <div class="btn-cont">
@@ -22,11 +22,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($months as $month)
+                @foreach ($days as $day)
                     <tr>
-                        <th class="expire-mobile">{{$month->id}}</th>
+                        <th class="expire-mobile">{{$day->id}}</th>
                         <td>
-                            <a href="{{ route('admin.months.show', ['month' =>$month])  }}" style="color:white" class="ts bs a-notlink badge bg-success rounded-pill"  > {{$month->month}} / {{$month->y}}</a >
+                            <a href="{{ route('admin.days.show', ['day' => $day])  }}" style="color:white" class="ts bs a-notlink badge bg-success rounded-pill"  > {{$day->day}} / {{$day->m}} / {{$day->y}}</a >
                            
                         </td>
                     
@@ -36,6 +36,6 @@
             </tbody>
         </table>
 
-    {{ $months->links() }}
+
 @endsection
 

@@ -10,7 +10,7 @@ class Date extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['reserved', 'year', 'month', 'day', 'day_w', 'time', 'visible', 'max_res'];
+    protected $fillable = ['reserved', 'year', 'month', 'day', 'day_w', 'time', 'visible', 'max_res', 'date_slot'];
     public $timestamps = false;
 
     // public function month() {
