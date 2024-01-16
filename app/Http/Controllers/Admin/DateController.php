@@ -69,19 +69,8 @@ class DateController extends Controller
             $seeder->setVariables($max_reservations, $times_slot, $days_off);
             $seeder->run();
 
-            $reservations = Reservation::all();
-            foreach($reservations as $reservation){
-               dump($reservation->date_slot);
-               $dataCorrispondente = Date::where('date_slot', $reservation->date_slot);
-               dump($dataCorrispondente->day);
-               if($dataCorrispondente){
-
-                $dataCorrispondente->reserved += $reservation->n_person;
-                $dataCorrispondente->update();
-               }
-            }
-            
-
+            // Ripristinare le prenotazioni
+            $this->restoreReservations();
 
             return back()->with('success', 'Seeder avvenuto con successo')->with('response', [
                 'success' => true,
@@ -92,6 +81,18 @@ class DateController extends Controller
                 'success' => false,
                 'error' => 'Si e verificato un errore durante l\'elaborazione della richiesta: ' . $e->getMessage(),
             ], 500);
+        }
+    }
+
+    public function restoreReservations()
+    {
+        $reservations = Reservation::where(DB::raw("STR_TO_DATE(date_slot, '%d/%m/%Y %H:%i')"), '>', DB::raw('NOW()'))->get();
+        // dd($reservations);
+
+        foreach ($reservations as $reservation) {
+            $date = Date::where('date_slot', $reservation->date_slot)->first();
+            $date->reserved = $date->reserved + $reservation->n_person;
+            $date->save();
         }
     }
 }

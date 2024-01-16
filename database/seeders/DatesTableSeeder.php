@@ -45,44 +45,27 @@ class DatesTableSeeder extends Seeder
             ]);
             for ($day = 1; $day <= $daysInMonth; $day++) {
                 $currentDayOfWeek = $currentDate->format('N');
-               
+
                 Day::create([
                     'day' => $currentDate->format('d'),
                     'm' => $currentDate->format('n'),
                     'y' => $currentDate->format('Y'),
                 ]);
-                
+
                 foreach ($times as $time) {
-                   
-                    if(!$disabledDays){
-                        Date::create([
-                            'reserved' => 0,
-                            'day_w' => $currentDayOfWeek,
-                            'month' => $currentDate->format('n'),
-                            'day' => $currentDate->format('d'),
-                            'time' => $time,
-                            'max_res' => $maxReservation,
-                            'year' => $currentDate->format('Y'),
-                            'visible' => 1,
-                            'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time,
-                            
-                            
-                        ]);
-                    }
-                    else {
-                        Date::create([
-                            'reserved' => 0,
-                            'day_w' => $currentDayOfWeek,
-                            'month' => $currentDate->format('n'),
-                            'day' => $currentDate->format('d'),
-                            'time' => $time,
-                            'max_res' => $maxReservation,
-                            'year' => $currentDate->format('Y'),
-                            'visible' => (1 && !in_array($currentDayOfWeek, $disabledDays)),
-                            'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time,
-                
-                        ]);
-                    }
+
+                    Date::create([
+                        'reserved' => 0,
+                        'day_w' => $currentDayOfWeek,
+                        'month' => $currentDate->format('n'),
+                        'day' => $currentDate->format('d'),
+                        'time' => $time,
+                        'max_res' => $maxReservation,
+                        'year' => $currentDate->format('Y'),
+                        'visible' => (1 && (!$disabledDays || !in_array($currentDayOfWeek, $disabledDays))),
+                        'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time,
+
+                    ]);
                 }
                 $currentDate->modify('+1 day');
             }
