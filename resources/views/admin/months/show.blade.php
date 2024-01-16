@@ -19,6 +19,8 @@
                     <th class="expire-mobile">MAX RES</th>
                     <th class="expire-mobile">PRENOTATI</th>
                     <th class="expire-mobile-s">VISIBILE</th>
+                    <th></th>
+            
 
  
 
@@ -79,6 +81,8 @@
                                 <button class="btn btn-warning">Modifica visibilità</button>
                             </form>
                         </td>
+                       
+
 
                         
 
