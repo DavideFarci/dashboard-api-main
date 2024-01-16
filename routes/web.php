@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\DayController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Admin\PostController;
@@ -77,6 +78,7 @@ Route::middleware(['auth', 'verified'])
         Route::resource('tags',         TagController::class);
         Route::resource('hashtags',     HashtagController::class);
         Route::resource('months',       MonthController::class);
+        Route::resource('days',         DayController::class);
 
         // Rotte Date 
         Route::post('/dates/updatestatus/{order_id}',       [DateController::class, 'updatestatus'])->name('dates.updatestatus');
