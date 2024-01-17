@@ -8,7 +8,7 @@
 
     <div class="row">
         <h1 >PRENOTAZIONI TAVOLI</h1>
-        <a  href="{{ route('admin.dates.index') }}" class="btn btn-warning">Gestione date</a>
+        <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-25 m-auto">Gestione date</a>
     </div>
         <table class="table table-striped">
             <thead>
@@ -20,10 +20,10 @@
                     <th class="expire-mobile-s">N OSPITI</th>
                     <th class="expire-mobile-s">DATA</th>
                     <th class="expire-mobile-s">ORARIO</th>
+                    <th>STATUS</th>
                     <th>conferma</th>
                     <th>annulla</th>
 
-                    <th>STATUS</th>
 
                     <th class="expire-mobile-s"></th>
 

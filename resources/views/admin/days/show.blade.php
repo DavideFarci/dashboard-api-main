@@ -63,12 +63,11 @@
             </thead>
             <tbody class="body-cat">
                 @foreach ($dates as $date)
-                    @if($date->day % 2 == 0) 
-                    <tr class="bg-blue" >
+               
                         
-                    @else
+                    
                     <tr >
-                        @endif
+                      
                         
 
                         
