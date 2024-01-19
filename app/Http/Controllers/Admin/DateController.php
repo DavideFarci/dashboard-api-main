@@ -54,11 +54,12 @@ class DateController extends Controller
     public function runSeeder(Request $request)
     {
         //dd($request->input("times_slot"));
-       
+
         try {
             $max_reservations = $request->input("max_reservations");
             $days_off = $request->input("days_off");
             $times_slot = $request->input("times_slot");
+            // dump($times_slot);
             $times = [
                 ['time' => '19:00', 'set' => ''],
                 ['time' => '19:30', 'set' => ''],
@@ -66,23 +67,25 @@ class DateController extends Controller
                 ['time' => '20:30', 'set' => ''],
                 ['time' => '21:00', 'set' => ''],
                 ['time' => '21:30', 'set' => ''],
-            ]; 
-            for($i = 0; $i < count( $times); $i++){
+            ];
+            for ($i = 0; $i < count($times); $i++) {
                 $times[$i]['set'] = $times_slot[$i];
             }
-            
-            // @dd("max_reservations: " . $max_reservations, "times_slot: " . $times_slot, "days_off: " . $days_off);
 
-            // Pulisco la tabella
+            // @dd("max_reservations: " . $max_reservations, "times_slot: " . $times_slot, "days_off: " . $days_off);
+            // dump($times);
+
+            // Pulisco le tabelle
             DB::table('dates')->truncate();
             DB::table('months')->truncate();
             DB::table('days')->truncate();
 
+            // Eseguo il seeder
             $seeder = new DatesTableSeeder();
             $seeder->setVariables($max_reservations, $times, $days_off);
             $seeder->run();
 
-            // Ripristinare le prenotazioni
+            // Ripristino le prenotazioni
             $this->restoreReservations();
 
             return back()->with('success', 'Seeder avvenuto con successo')->with('response', [
@@ -90,10 +93,15 @@ class DateController extends Controller
                 'message' => 'Seeder avvenuto con successo',
             ]);
         } catch (Exception $e) {
-            return response()->json([
+            $trace = $e->getTrace();
+            $errorInfo = [
                 'success' => false,
-                'error' => 'Si e verificato un errore durante l\'elaborazione della richiesta: ' . $e->getMessage(),
-            ], 500);
+                'error' => 'Si è verificato un errore durante l\'elaborazione della richiesta: ' . $e->getMessage(),
+                'file' => $trace[0]['file'],
+                'line' => $trace[0]['line'],
+            ];
+
+            return response()->json($errorInfo, 500);
         }
     }
 

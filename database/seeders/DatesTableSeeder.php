@@ -18,14 +18,9 @@ class DatesTableSeeder extends Seeder
 
     public function setVariables($max_reservations, $times, $days_off)
     {
-
         $this->max_reservations = $max_reservations;
         $this->times = $times;
         $this->days_off = $days_off;
-
-      
-        
-
     }
 
     public function run()
@@ -34,6 +29,8 @@ class DatesTableSeeder extends Seeder
         $currentDate = new DateTime();
         $times = $this->times;
         $disabledDays = $this->days_off;
+
+        // dump($times);
 
         // Si cicla contemporaneamente sui mesi, sui giorni e sulle fasce orarie
         // per ogni mese si contano i giorni, per ogni giorno si guarda il giorno(num) della settimana
@@ -57,26 +54,25 @@ class DatesTableSeeder extends Seeder
                 ]);
 
                 foreach ($times as $time) {
-                    $set = $time['set'];
-                    //dd($set);
-                    if($set == 0){
-                    Date::create([
-                        'reserved' => 0,
-                        'day_w' => $currentDayOfWeek,
-                        'month' => $currentDate->format('n'),
-                        'day' => $currentDate->format('d'),
-                        'time' => $time,
-                        'max_res' => $maxReservation,
-                        'year' => $currentDate->format('Y'),
-                        'visible' => (1 && (!$disabledDays || !in_array($currentDayOfWeek, $disabledDays))),
-                        'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time,
-                        //'status' => $time['set']
-                    ]);
+                    // dump($time, $time['set']);
+                    if ($time['set']) {
+                        Date::create([
+                            'reserved' => 0,
+                            'day_w' => $currentDayOfWeek,
+                            'month' => $currentDate->format('n'),
+                            'day' => $currentDate->format('d'),
+                            'time' => $time['time'],
+                            'max_res' => $maxReservation,
+                            'year' => $currentDate->format('Y'),
+                            'visible' => (1 && (!$disabledDays || !in_array($currentDayOfWeek, $disabledDays))),
+                            'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time['time'],
+                            'status' => $time['set'],
+                        ]);
                     }
                 }
                 $currentDate->modify('+1 day');
             }
         }
-        @dump($currentDate);
+        // dump($currentDate);
     }
 }

@@ -15,6 +15,7 @@
                     <th class="expire-mobile">MAX RES</th>
                     <th class="expire-mobile">PRENOTATI</th>
                     <th class="expire-mobile-s">VISIBILE</th>
+                    <th class="expire-mobile-s">STATUS</th>
 
  
 
@@ -62,6 +63,9 @@
                             
                         
                         </td>
+
+                        <td class="expire-mobile-s">{{$date->status}}</td>
+
                         <td class="expire-mobile-s">
                             <form action="{{ route('admin.dates.updatestatus', $date->id) }}" method="post">
                                 @csrf

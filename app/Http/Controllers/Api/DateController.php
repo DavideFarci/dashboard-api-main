@@ -29,8 +29,7 @@ class DateController extends Controller
 
 
             // Filtro dal giorno successivo a oggi e per i due mesi successivi
-            $dates = Date::where('visible', true)
-                ->where('year', '>=', $dataInizio->year)
+            $dates = Date::where('year', '>=', $dataInizio->year)
                 ->where('month', '>=', $dataInizio->month)
                 ->where(function ($query) use ($dataInizio) {
                     $query->where('month', '>', $dataInizio->month)
