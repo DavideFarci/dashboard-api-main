@@ -1,10 +1,17 @@
 @extends('layouts.base')
 
 @section('contents')
-    {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
+
     <?php 
     // '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '16:30', '17:00', '17:30', '18:00', '18:30',
-    $times = ['19:00','19:30','20:00','20:30','21:00','21:30','22:00']; 
+    $times = [
+        1 => ['time' => '19:00', 'set' => ''] ,
+        2 => ['time' => '19:30', 'set' => ''] ,
+        3 => ['time' => '20:00', 'set' => ''] ,
+        4 => ['time' => '20:30', 'set' => ''] ,
+        5 => ['time' => '21:00', 'set' => ''] ,
+        6 => ['time' => '21:30', 'set' => ''] ,
+    ]; 
     $days = [1, 2, 3, 4, 5, 6, 7];
     $days_name = [' ','lunedì', 'martedi', 'mercoledì', 'giovedì', 'venerd', 'sabato', 'domenica'];
 ?>
@@ -52,9 +59,14 @@
             <div class="btn-group  py-1" role="group" aria-label="Basic checkbox toggle button group">
 
                 @foreach ($times as $time)
+           
                 
-                <input type="checkbox" class="btn-check" name="times_slot[]" id="times_slot_{{ $time }}" value="{{ $time }}" autocomplete="off">
-                <label class="btn btn-outline-dark" for="times_slot_{{ $time }}">{{ $time }}</label>
+                <select name="times_slot[]" id="">
+                    <option value="0" >{{ $time['time'] }} - ND</option>
+                    <option value="1">{{ $time['time'] }} - asporto</option>
+                    <option value="2">{{ $time['time'] }} - tavoli</option>
+                    <option value="3">{{ $time['time'] }} - tutti</option>
+                </select>
               
                 @endforeach
             </div>

@@ -13,22 +13,26 @@ class DatesTableSeeder extends Seeder
 {
 
     protected $max_reservations;
-    protected $times_slot;
+    protected $times;
     protected $days_off = [];
 
-    public function setVariables($max_reservations, $times_slot, $days_off)
+    public function setVariables($max_reservations, $times, $days_off)
     {
 
         $this->max_reservations = $max_reservations;
-        $this->times_slot = $times_slot;
+        $this->times = $times;
         $this->days_off = $days_off;
+
+      
+        
+
     }
 
     public function run()
     {
         $maxReservation = $this->max_reservations;
         $currentDate = new DateTime();
-        $times = $this->times_slot;
+        $times = $this->times;
         $disabledDays = $this->days_off;
 
         // Si cicla contemporaneamente sui mesi, sui giorni e sulle fasce orarie
@@ -53,7 +57,9 @@ class DatesTableSeeder extends Seeder
                 ]);
 
                 foreach ($times as $time) {
-
+                    $set = $time['set'];
+                    //dd($set);
+                    if($set == 0){
                     Date::create([
                         'reserved' => 0,
                         'day_w' => $currentDayOfWeek,
@@ -64,8 +70,9 @@ class DatesTableSeeder extends Seeder
                         'year' => $currentDate->format('Y'),
                         'visible' => (1 && (!$disabledDays || !in_array($currentDayOfWeek, $disabledDays))),
                         'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time,
-
+                        //'status' => $time['set']
                     ]);
+                    }
                 }
                 $currentDate->modify('+1 day');
             }

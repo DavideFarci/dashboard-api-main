@@ -53,11 +53,24 @@ class DateController extends Controller
 
     public function runSeeder(Request $request)
     {
+        //dd($request->input("times_slot"));
+       
         try {
             $max_reservations = $request->input("max_reservations");
-            $times_slot = $request->input("times_slot");
             $days_off = $request->input("days_off");
-
+            $times_slot = $request->input("times_slot");
+            $times = [
+                ['time' => '19:00', 'set' => ''],
+                ['time' => '19:30', 'set' => ''],
+                ['time' => '20:00', 'set' => ''],
+                ['time' => '20:30', 'set' => ''],
+                ['time' => '21:00', 'set' => ''],
+                ['time' => '21:30', 'set' => ''],
+            ]; 
+            for($i = 0; $i < count( $times); $i++){
+                $times[$i]['set'] = $times_slot[$i];
+            }
+            
             // @dd("max_reservations: " . $max_reservations, "times_slot: " . $times_slot, "days_off: " . $days_off);
 
             // Pulisco la tabella
@@ -66,7 +79,7 @@ class DateController extends Controller
             DB::table('days')->truncate();
 
             $seeder = new DatesTableSeeder();
-            $seeder->setVariables($max_reservations, $times_slot, $days_off);
+            $seeder->setVariables($max_reservations, $times, $days_off);
             $seeder->run();
 
             // Ripristinare le prenotazioni
