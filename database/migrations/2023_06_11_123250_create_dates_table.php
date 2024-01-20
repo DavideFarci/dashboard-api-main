@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->tinyInteger('reserved');
+            $table->tinyInteger('reserved_pz');
             $table->smallInteger('year');
             $table->tinyInteger('month');
             $table->tinyInteger('day');
@@ -25,6 +26,7 @@ return new class extends Migration
             $table->string('date_slot');
             $table->boolean('visible');
             $table->tinyInteger('max_res');
+            $table->tinyInteger('max_pz');
             $table->tinyInteger('status');
         });
     }
