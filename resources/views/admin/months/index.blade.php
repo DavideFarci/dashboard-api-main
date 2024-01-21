@@ -40,7 +40,13 @@
         <h5 class="pt-4">Indica il nuomero di posti a sedere per fascia oraria</h5>
         <div class="input-group flex-nowrap py-2">
             <label for="max_reservations" class="input-group-text" >N° di posti a sedere</label>
-            <input name="max_reservations" id="max_reservations" type="text" class="form-control" placeholder="N° di posti a sedere" aria-label="N° di posti a sedere" aria-describedby="addon-wrapping">
+            <input name="max_reservations" id="max_reservations" type="number" class="form-control" placeholder="N° di posti a sedere" aria-label="N° di posti a sedere" aria-describedby="addon-wrapping">
+          </div>
+        <div>
+        <h5 class="pt-4">Indica il nuomero massimo di pezzi per l'asporto</h5>
+        <div class="input-group flex-nowrap py-2">
+            <label for="max_pz" class="input-group-text" >N° di pezzi</label>
+            <input name="max_pz" id="max_pz" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping">
           </div>
         <div>
             <h5 class="pt-4">Seleziona i giorni da disabilitare</h5>

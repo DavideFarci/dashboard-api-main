@@ -13,19 +13,20 @@ class DatesTableSeeder extends Seeder
 {
 
     protected $max_reservations;
+    protected $max_pz;
     protected $times;
     protected $days_off = [];
 
-    public function setVariables($max_reservations, $times, $days_off)
+    public function setVariables($max_reservations, $max_pz, $times, $days_off)
     {
         $this->max_reservations = $max_reservations;
+        $this->max_reservations = $max_pz;
         $this->times = $times;
         $this->days_off = $days_off;
     }
 
     public function run()
     {
-        $maxReservation = $this->max_reservations;
         $currentDate = new DateTime();
         $times = $this->times;
         $disabledDays = $this->days_off;
@@ -58,11 +59,13 @@ class DatesTableSeeder extends Seeder
                     if ($time['set']) {
                         Date::create([
                             'reserved' => 0,
+                            'reserved_pz' => 0,
                             'day_w' => $currentDayOfWeek,
                             'month' => $currentDate->format('n'),
                             'day' => $currentDate->format('d'),
                             'time' => $time['time'],
-                            'max_res' => $maxReservation,
+                            'max_res' => $this->max_reservations,
+                            'max_pz' => $this->max_pz,
                             'year' => $currentDate->format('Y'),
                             'visible' => (1 && (!$disabledDays || !in_array($currentDayOfWeek, $disabledDays))),
                             'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time['time'],
