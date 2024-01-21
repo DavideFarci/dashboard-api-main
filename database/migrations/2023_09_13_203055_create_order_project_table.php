@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_project', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects');
 
@@ -21,7 +22,8 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->tinyInteger('quantity_item');
-            $table->primary(['order_id', 'project_id']);
+            $table->string('deselected');
+            //$table->primary(['order_id']);
         });
     }
 
