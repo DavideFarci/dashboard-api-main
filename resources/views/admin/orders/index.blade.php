@@ -2,7 +2,7 @@
 
 @section('contents')
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
-
+   
 
     
         <h1>PRENOTAZIONI D'ASPORTO</h1>
@@ -17,6 +17,8 @@
                     <th class="expire-mobile-s">IMPORTO</th>
                     <th>STATUS</th>
                     <th class="expire-mobile-s">PRODOTTI</th>
+
+                    
                     <th></th>
 
 
@@ -47,15 +49,21 @@
                             
                         
                         </td>
+
                         <td class="expire-mobile-s">
                             <ul>
                                 @foreach ($order->projects as $project)
-                                <li>{{$project->name}}</li>
-                                @foreach ($quantity_item as $qt)
-                                    @if($qt->project_id == $project->id && $qt->order_id == $order->id && $qt->quantity_item!==1)
-                                    <strong>x{{$qt->quantity_item}}</strong>
-                                    @endif
-                                @endforeach
+                                <li>{{$project->name}}
+                                    @foreach ($orderProject as $oP)
+                                        @if($oP->project_id == $project->id && $oP->order_id == $order->id )
+                                        <?php  $arrD= json_decode($oP->deselected) ?> 
+                                            @foreach ($arrD as $d)
+                                                <strong>x{{$oP->quantity_item}}</strong>
+                                                <strong>- {{$d}}</strong>          
+                                            @endforeach
+                                        @endif
+                                    @endforeach
+                                </li>
                                 @endforeach
                             </ul>
                         </td>

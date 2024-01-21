@@ -13,17 +13,17 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::paginate(15);;
-        $quantity_item = OrderProject::all();
+        $orderProject = OrderProject::all();
         //dd($quantity_item );
-        return view('admin.orders.index', compact('orders', 'quantity_item' ));
+        return view('admin.orders.index', compact('orders', 'orderProject' ));
     }
 
     
     public function show($id)
     {
         $order = Order::where('id', $id)->firstOrFail();
-        $quantity_item = OrderProject::all();
-        return view('admin.orders.show', compact('order', 'quantity_item' ));
+        $orderProject = OrderProject::all();
+        return view('admin.orders.show', compact('order', 'orderProject' ));
     }
 
     
