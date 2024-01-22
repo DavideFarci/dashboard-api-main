@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Exception;
 use App\Models\Date;
 use App\Models\Order;
 use App\Models\Project;
@@ -10,6 +11,7 @@ use App\Models\OrderProject;
 use App\Models\projectOrder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -34,56 +36,69 @@ class OrderController extends Controller
         $arrvar2 = json_decode($arrvar, true);
 
 
-        for ($i = 0; $i < count($arrvar2); ++$i) {
-            $project = Project::where('id', $arrvar2[$i]['p_id'])->first();
+        try {
+            for ($i = 0; $i < count($arrvar2); ++$i) {
+                $project = Project::where('id', $arrvar2[$i]['p_id'])->first();
 
-            $total_price += $project->price *  $arrvar2[$i]['counter'];
-        }
-
-        $newOrder = new Order();
-        $newOrder->name          = $data['name'];
-        $newOrder->phone         = $data['phone'];
-        $newOrder->time          = $data['time'];
-        $newOrder->date          = $data['date'];
-        $newOrder->total_price   = $total_price;
-        $newOrder->status        = 0;
-        $newOrder->save();
-
-        $pezzi = 0;
-        foreach ($arrvar2 as $elem) {
-            $item_order = new OrderProject();
-            $item_order->order_id = $newOrder->id;
-            $item_order->project_id = $elem['p_id'];
-            $item_order->quantity_item = $elem['counter'];
-            $product = Project::where('id', $elem['p_id'])->first();
-            $category = Category::where('id', $product->category_id)->first();
-            if ($category->slot) {
-                $pezzi = ($pezzi + $elem['counter']) * $category->slot;
+                $total_price += $project->price *  $arrvar2[$i]['counter'];
             }
-            $item_order->deselected = json_encode($elem['deselected']);
-            $item_order->addicted = json_encode($elem['addicted']);
-            $item_order->save();
-        }
 
-        $date = Date::where('id', $data['date_id'])->firstOrFail();
-        $maximum = $date->reserved_pz + $pezzi;
+            $newOrder = new Order();
+            $newOrder->name          = $data['name'];
+            $newOrder->phone         = $data['phone'];
+            $newOrder->time          = $data['time'];
+            $newOrder->date          = $data['date'];
+            $newOrder->total_price   = $total_price;
+            $newOrder->status        = 0;
+            $newOrder->save();
 
-        if ($maximum <= $date->max_pz) {
-            $date->reserved_pz = $date->reserved_pz + $pezzi;
-            if ($date->reserved_pz == $date->max_pz) {
-                $date->visible = 0;
+            $pezzi = 0;
+            foreach ($arrvar2 as $elem) {
+                $item_order = new OrderProject();
+                $item_order->order_id = $newOrder->id;
+                $item_order->project_id = $elem['p_id'];
+                $item_order->quantity_item = $elem['counter'];
+                $product = Project::where('id', $elem['p_id'])->first();
+                $category = Category::where('id', $product->category_id)->first();
+                if ($category->slot) {
+                    $pezzi = ($pezzi + $elem['counter']) * $category->slot;
+                }
+                $item_order->deselected = json_encode($elem['deselected']);
+                $item_order->addicted = json_encode($elem['addicted']);
+                $item_order->save();
             }
-        } else {
-            // se non ci sono più posti rispondo picche
+
+            $date = Date::where('id', $data['date_id'])->firstOrFail();
+            $maximum = $date->reserved_pz + $pezzi;
+
+            if ($maximum <= $date->max_pz) {
+                $date->reserved_pz = $date->reserved_pz + $pezzi;
+                if ($date->reserved_pz == $date->max_pz) {
+                    $date->visible = 0;
+                }
+            } else {
+                // se non ci sono più posti rispondo picche
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Il numero massimo di pezzi per questa data e orario è già stato raggiunto',
+                ]);
+            }
+            // ritornare un valore di successo al frontend
+            return response()->json([
+                'success' => true,
+                'order' => $newOrder
+            ]);
+        } catch (QueryException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Il numero massimo di pezzi per questa data e orario è già stato raggiunto',
+                'message' => 'Errore del database: ' . $e->getMessage(),
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Si è verificato un errore: ' . $e->getMessage(),
             ]);
         }
-        // ritornare un valore di successo al frontend
-        return response()->json([
-            'success' => true,
-        ]);
 
         // return response()->json($request->all()); // solo per debuggare
     }
