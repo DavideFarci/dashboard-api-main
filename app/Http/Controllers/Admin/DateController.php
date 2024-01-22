@@ -57,6 +57,7 @@ class DateController extends Controller
 
         try {
             $max_reservations = $request->input("max_reservations");
+            $max_pz = $request->input("max_pz");
             $days_off = $request->input("days_off");
             $times_slot = $request->input("times_slot");
             // dump($times_slot);
@@ -82,7 +83,7 @@ class DateController extends Controller
 
             // Eseguo il seeder
             $seeder = new DatesTableSeeder();
-            $seeder->setVariables($max_reservations, $times, $days_off);
+            $seeder->setVariables($max_reservations, $max_pz, $times, $days_off);
             $seeder->run();
 
             // Ripristino le prenotazioni

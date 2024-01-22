@@ -55,29 +55,30 @@
                 @foreach ($days as $day)
                 <input class="btn-check" type="checkbox" name="days_off[]" id="days_off_{{ $day }}" value="{{ $day }}">
                 <label class="btn btn-outline-dark" for="days_off_{{ $day }}">{{ $days_name[$day] }}</label>
+                <div>
+                    <h5 class="pt-4">Seleziona le fasce orarie disponibili</h5>
+        
+                    <div class="btn-group  py-1" role="group" aria-label="Basic checkbox toggle button group">
+        
+                        @foreach ($times as $time)
+                   
+                        
+                        <select name="times_slot[]" id="">
+                            <option value="0" >{{ $time['time'] }} - ND</option>
+                            <option value="1">{{ $time['time'] }} - asporto</option>
+                            <option value="2">{{ $time['time'] }} - tavoli</option>
+                            <option value="3">{{ $time['time'] }} - tutti</option>
+                        </select>
+                      
+                        @endforeach
+                    </div>
+                    
+                </div>
                 @endforeach
             </div>
         </div>
         
-        <div>
-            <h5 class="pt-4">Seleziona le fasce orarie disponibili</h5>
 
-            <div class="btn-group  py-1" role="group" aria-label="Basic checkbox toggle button group">
-
-                @foreach ($times as $time)
-           
-                
-                <select name="times_slot[]" id="">
-                    <option value="0" >{{ $time['time'] }} - ND</option>
-                    <option value="1">{{ $time['time'] }} - asporto</option>
-                    <option value="2">{{ $time['time'] }} - tavoli</option>
-                    <option value="3">{{ $time['time'] }} - tutti</option>
-                </select>
-              
-                @endforeach
-            </div>
-            
-        </div>
         <button class="btn btn-dark mt-4">Modifica</button>
     </form>
 

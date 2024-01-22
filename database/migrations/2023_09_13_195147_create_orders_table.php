@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('total_price', 100)->nullable();
             $table->string('time', 30)->nullable();
             $table->string('date', 30)->nullable();
-            $table->string('var_id')->nullable();
             $table->timestamps();
         });
     }

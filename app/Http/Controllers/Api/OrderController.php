@@ -29,6 +29,7 @@ class OrderController extends Controller
 
         // salvare i dati del Order nel database
         $total_price = 0;
+        $total_pz = 0;
         $data = $request->all();
         // $arrId= json_decode($data['arrId']);
         // $arrQt= json_decode($data['arrQt']);
@@ -48,6 +49,7 @@ class OrderController extends Controller
             $project = Project::where('id', $arrvar2[$i]['p_id'])->first();
 
             $total_price += $project->price *  $arrvar2[$i]['counter'];
+            
         }
         
         for($i = 0; $i < count($arrvar2); ++$i){
@@ -71,7 +73,6 @@ class OrderController extends Controller
         $newOrder->date          = $data['date'];
         $newOrder->total_price   = $total_price;
         $newOrder->status        = 0;
-        $arr_id = [];
         $newOrder->save();
         
         foreach ($cart as $elem) {
@@ -81,13 +82,10 @@ class OrderController extends Controller
             $item_order->quantity_item = $elem['qt'];
             $item_order->deselected= json_encode($elem['deselected']);
             $item_order->save();
-            array_push($arr_id, $item_order->id );
+
         }
-        // richiamo l'ordine che ho appena inserito (just do)
-        $jdNewOrder= Order::where('id', $newOrder->id)->firstOrFail();
-        //dd($jdNewOrder->id);
-        $jdNewOrder->var_id = json_encode($arr_id);
-        $jdNewOrder->update();
+
+
 
         // ritornare un valore di successo al frontend
         return response()->json([

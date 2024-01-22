@@ -37,7 +37,7 @@ class ProjectsTableSeeder extends Seeder
             'slug'     => $slug,
         ]);
 
-        $project->tags()->sync($faker->randomElements($tags, 2));
+        $project->tags()->sync($faker->randomElements($tags, 5));
     }
 }
 }

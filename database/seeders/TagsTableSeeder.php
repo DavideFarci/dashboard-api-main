@@ -16,52 +16,236 @@ class TagsTableSeeder extends Seeder
     public function run()
     {
         $tags = [
-            [ 'name' => 'pomodoro',  ],
-            [ 'name' => 'pesto della casa',  ],
-            [ 'name' => 'melanzane grigliate',  ],
-            [ 'name' => 'salsa di peperoncini freschi',  ],
-            [ 'name' => 'passata di pomodoro cotta con ventricina piccante',  ],
-            [ 'name' => 'aglio',  ],
-            [ 'name' => 'basilico',  ],
-            [ 'name' => 'rucola',  ],
-            [ 'name' => 'foglie del cappero',  ],
-            [ 'name' => 'carciofini',  ],
-            [ 'name' => 'funghi',  ],
-            [ 'name' => 'olive nere',  ],
-            [ 'name' => 'patate',  ],
-            [ 'name' => 'cipolla',  ],
-            [ 'name' => 'radicchio',  ],
-            [ 'name' => 'verdure di stagione',  ],
-            [ 'name' => 'origano',  ],
-            [ 'name' => 'rosmarino',  ],
-            [ 'name' => 'salsa tartufata',  ],
-            [ 'name' => 'pesto di basilico',  ],
-            [ 'name' => 'pomodorino ciliegino',  ],
-            [ 'name' => 'pomodorino giallo',  ],
-            [ 'name' => 'pinoli',  ],
-            [ 'name' => 'pesto di pistacchi della casa',  ],
-            [ 'name' => 'granella di pistacchi',  ],
-            [ 'name' => 'noci',  ],
-            [ 'name' => 'carne salada trentina',  ],
-            [ 'name' => 'salsiccia',  ],
-            [ 'name' => 'salame',  ],
-            [ 'name' => 'mortadella',  ],
-            [ 'name' => 'ventricina piccante',  ],
-            [ 'name' => 'arrosto di tacchino in porchetta marchigiano',  ],
-            [ 'name' => 'würstel',  ],
-            [ 'name' => 'pancetta marchigiana',  ],
-            [ 'name' => 'speck',  ],
-            [ 'name' => 'parmigiano',  ],
-            [ 'name' => 'mozzarella fior di latte',  ],
-            [ 'name' => 'mozzarella di bufala campana',  ],
-            [ 'name' => 'scaglie di grana',  ],
-            [ 'name' => 'stracciatella',  ],
-            [ 'name' => 'stracciatella di burrata',  ],
-            [ 'name' => 'gorgonzola',  ],
-            [ 'name' => 'pecorino',  ],
-            [ 'name' => 'acciughe del mar cantabrico',  ],
-            [ 'name' => 'cotto',  ],
-            [ 'name' => 'pancetta',  ],
+            [
+                'name' => 'pomodoro',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'pesto della casa',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'melanzane grigliate',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'salsa di peperoncini freschi',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'passata di pomodoro cotta con ventricina piccante',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'aglio',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'basilico',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'rucola',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'foglie del cappero',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'carciofini',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'funghi',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'olive nere',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'patate',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'cipolla',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'radicchio',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'verdure di stagione',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'origano',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'rosmarino',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'salsa tartufata',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'pesto di basilico',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'pomodorino ciliegino',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'pomodorino giallo',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'pinoli',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'pesto di pistacchi della casa',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'granella di pistacchi',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'noci',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'carne salada trentina',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'salsiccia',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'salame',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'mortadella',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'ventricina piccante',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'arrosto di tacchino in porchetta marchigiano',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'würstel',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'pancetta marchigiana',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'speck',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'parmigiano',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'mozzarella fior di latte',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'mozzarella di bufala campana',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'scaglie di grana',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'stracciatella',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'stracciatella di burrata',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'gorgonzola',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'pecorino',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'acciughe del mar cantabrico',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'cotto',  
+                'price' => 100,
+            ],
+
+            [
+                'name' => 'pancetta',  
+                'price' => 100,
+            ],
+
 
         ];
 

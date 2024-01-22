@@ -20,7 +20,7 @@ class DatesTableSeeder extends Seeder
     public function setVariables($max_reservations, $max_pz, $times, $days_off)
     {
         $this->max_reservations = $max_reservations;
-        $this->max_reservations = $max_pz;
+        $this->max_pz = $max_pz;
         $this->times = $times;
         $this->days_off = $days_off;
     }

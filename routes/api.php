@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\DateController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SlotController;
@@ -18,6 +19,7 @@ Route::get('setting',           [SettingController::class, 'index'])->name('api.
 Route::get('time',              [TimeController::class, 'index'])->name('api.time.index');
 Route::get('post',              [PostController::class, 'index'])->name('api.post.index');
 Route::get('slot',              [SlotController::class, 'index'])->name('api.slot.index');
+Route::get('tag',               [TagController::class, 'index'])->name('api.tag.index');
 Route::post('reservations',     [ReservationController::class, 'store'])->name('api.reservations.store');
 Route::post('orders',           [OrderController::class, 'store'])->name('api.orders.store');
 Route::get('dates',             [DateController::class, 'index'])->name('api.dates.index');
