@@ -14,7 +14,9 @@ class ProjectController extends Controller
 {
     private $validations = [
         'name'          => 'required|string|min:2|max:100',
-
+        'price'         => 'required|string|min:1|max:50',
+        'counter'       => 'required|string|min:1|max:50',
+        'image'         => 'string|max:1000'
     ];
 
     public function index()
@@ -23,31 +25,31 @@ class ProjectController extends Controller
 
         return view('admin.projects.index', compact('projects'));
     }
-    
-    
+
+
     public function create()
     {
         $categories = Category::all();
         $tags       = Tag::all();
-        return view('admin.projects.create', compact('categories', 'tags') );
+        return view('admin.projects.create', compact('categories', 'tags'));
     }
 
 
     public function store(Request $request)
     {
-        
+
         $request->validate($this->validations);
-    
+
         $data = $request->all();
 
         $newProject = new Project();
-    
+
         if (isset($data['image'])) {
             $imagePath = Storage::put('public/uploads', $data['image']);
             $newProject->image = $imagePath;
-        } 
+        }
 
-        
+
         $newProject->name          = $data['name'];
         $newProject->price         = $data['price'];
         $newProject->counter       = 0;
@@ -55,10 +57,10 @@ class ProjectController extends Controller
         $newProject->category_id   = $data['category_id'];
 
         $newProject->save();
-        
+
         $newProject->tags()->sync($data['tags'] ?? []);
-        
-		return redirect()->route('admin.projects.index', ['project']);
+
+        return redirect()->route('admin.projects.index', ['project']);
     }
 
     public function show($slug)
@@ -66,12 +68,12 @@ class ProjectController extends Controller
         $project = Project::where('slug', $slug)->firstOrFail();
         return view('admin.projects.show', compact('project'));
     }
-    
+
 
 
     public function edit($slug)
     {
-        
+
         $project = Project::where('slug', $slug)->firstOrFail();
 
         $categories = Category::all();
@@ -117,7 +119,7 @@ class ProjectController extends Controller
         return to_route('admin.projects.show', ['project' => $project]);
     }
 
-  
+
     public function destroy($slug)
     {
         $project = Project::where('slug', $slug)->firstOrFail();
@@ -127,7 +129,7 @@ class ProjectController extends Controller
     }
 
 
-    
+
     public function restore($id)
     {
         Project::withTrashed()->where('id', $id)->restore();
@@ -137,12 +139,12 @@ class ProjectController extends Controller
         return to_route('admin.projects.index')->with('restore_success', $project);
     }
 
-    
+
     public function trashed()
     {
-        $trashedProjects = Project::onlyTrashed()->paginate(10); 
+        $trashedProjects = Project::onlyTrashed()->paginate(10);
 
-        
+
 
         return view('admin.projects.trashed', compact('trashedProjects'));
     }
@@ -153,6 +155,5 @@ class ProjectController extends Controller
         $project->forceDelete();
 
         return to_route('admin.projects.trashed')->with('delete_success', $project);
-    
     }
 }
