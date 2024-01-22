@@ -18,23 +18,19 @@ class CategoriesTableSeeder extends Seeder
         $categories = [
             [
                 'name'          => 'Tutti',
-                'slot'          => 1
+                'slot'          => 0
             ],
             [
                 'name'          => 'Pizze Speciali',
-                'slot'          => 5
+                'slot'          => 1
             ],
             [
                 'name'          => 'Pizze Rosse',
-                'slot'          => 5     
+                'slot'          => 1     
             ],
             [
                 'name'          => 'Pizze Bianche',
-                'slot'          => 5
-            ],
-            [
-                'name'          => 'Pezzi al taglio',
-                'slot'          => 5
+                'slot'          => 1
             ],
             [
                 'name'          => 'Dolci',
