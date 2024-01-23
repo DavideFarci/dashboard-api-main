@@ -32,7 +32,7 @@ class OrderController extends Controller
         $total_price = 0;
         $data = $request->all();
 
-        $arrvar = str_replace('\\', '', $data['arrVariation']);
+        $arrvar = str_replace('\\', '', $data['products']);
         $arrvar2 = json_decode($arrvar, true);
 
 
@@ -46,8 +46,9 @@ class OrderController extends Controller
             $newOrder = new Order();
             $newOrder->name          = $data['name'];
             $newOrder->phone         = $data['phone'];
-            $newOrder->time          = $data['time'];
-            $newOrder->date          = $data['date'];
+            $newOrder->email         = $data['email'];
+            $newOrder->message       = $data['message'];
+            $newOrder->date_slot     = $data['date_slot'];
             $newOrder->total_price   = $total_price;
             $newOrder->status        = 0;
             $newOrder->save();
