@@ -24,7 +24,6 @@ return new class extends Migration
             $table->tinyInteger('quantity_item');
             $table->string('deselected');
             $table->string('addicted');
-            $table->string('price_variation');
             //$table->primary(['order_id']);
         });
     }

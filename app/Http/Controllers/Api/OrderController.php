@@ -11,6 +11,7 @@ use App\Models\OrderProject;
 use App\Models\projectOrder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Tag;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,6 +42,14 @@ class OrderController extends Controller
                 $project = Project::where('id', $arrvar2[$i]['p_id'])->first();
 
                 $total_price += $project->price *  $arrvar2[$i]['counter'];
+            }
+
+
+            for ($i = 0; $i < count($arrvar2); ++$i) {
+                for ($z = 0; $z < count($arrvar2[$i]['addicted']); $z++) {
+                    $ingredient = Tag::where('name', $arrvar2[$i]['addicted'][$z])->first();
+                    $total_price += $ingredient->price * $arrvar2[$z]['counter'];
+                }
             }
 
             $newOrder = new Order();
@@ -95,10 +104,15 @@ class OrderController extends Controller
                 'message' => 'Errore del database: ' . $e->getMessage(),
             ]);
         } catch (Exception $e) {
-            return response()->json([
+            $trace = $e->getTrace();
+            $errorInfo = [
                 'success' => false,
-                'message' => 'Si è verificato un errore: ' . $e->getMessage(),
-            ]);
+                'error' => 'Si è verificato un errore durante l\'elaborazione della richiesta: ' . $e->getMessage(),
+                'file' => $trace[0]['file'],
+                'line' => $trace[0]['line'],
+            ];
+
+            return response()->json($errorInfo, 500);
         }
 
         // return response()->json($request->all()); // solo per debuggare
