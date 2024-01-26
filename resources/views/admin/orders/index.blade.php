@@ -37,13 +37,17 @@
                         <td class="expire-mobile-s">{{$order->date}}</td>
                         <td class="expire-mobile-s">€{{$order->total_price / 100}}</td>
                         <td>
-                            @if($order->status)
+                            @if($order->status == 1)
 
                                 <span class="badge bg-success">Completato</span> 
                                 
-                                @else
-                                
-                                <span class="badge bg-danger">In Elaborazione</span> 
+                            @elseif($order->status == 2)    
+
+                                <span class="badge bg-danger">Annullato</span> 
+
+                            @else
+
+                                <span class="badge bg-warning">In Elaborazione</span> 
                                 
                             @endif
                             
@@ -68,9 +72,13 @@
                             </ul>
                         </td>
                         <td>
-                            <form action="{{ route('admin.orders.updatestatus', $order->id) }}" method="post">
+                            <form class="d-inline" action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
                                 @csrf
-                                <button class="expire-mobile-s btn btn-warning">Modifica Stuatus</button>
+                                <button value="1" class="expire-mobile-s btn btn-warning">Conferma</button>
+                            </form>
+                            <form class="d-inline" action="{{ route('admin.orders.rejectOrder', $order->id) }}" method="post">
+                                @csrf
+                                <button value="2" class="expire-mobile-s btn btn-danger">Annulla</button>
                             </form>
                         </td>
 
