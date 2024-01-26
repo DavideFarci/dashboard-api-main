@@ -12,9 +12,19 @@ use Illuminate\Database\QueryException;
 
 class ReservationController extends Controller
 {
+    private $validations = [
+        'name'      => 'required|string|max:50',
+        'phone'     => 'required|string|max:20',
+        'n_person'  => 'required|string|max:10',
+        'message'   => 'required|string|max:500',
+        'date_slot' => 'required|string|max:16',
+    ];
+
     public function store(Request $request)
     {
         try {
+            $request->validate($this->validations);
+
             $data = $request->all();
 
             $newOrder = new Reservation();
@@ -44,7 +54,7 @@ class ReservationController extends Controller
             }
 
 
-//invia mail
+            //invia mail
 
             // Salvo la data e la prenotazione
             $date->save();
