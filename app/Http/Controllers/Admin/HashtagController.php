@@ -1,6 +1,6 @@
 <?php
 
-Namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Hashtag;
 use Illuminate\Http\Request;
@@ -8,9 +8,9 @@ use App\Http\Controllers\Controller;
 
 class HashtagController extends Controller
 {
-   private $validations = [
-    
-    'tag' => ['required', 'string', 'max:255', 'unique:'.Hashtag::class],
+    private $validations = [
+
+        'tag' => 'required|string|min:2|max:50',
     ];
 
     public function index()
@@ -19,8 +19,8 @@ class HashtagController extends Controller
 
         return view('admin.hashtags.index', compact('hashtags'));
     }
-    
-    
+
+
     public function create()
     {
         return view('admin.hashtags.create');
@@ -30,21 +30,21 @@ class HashtagController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->validations);
-        
+
         $data = $request->all();
-        
+
         $newhashtag = new hashtag();
-        
+
         $newhashtag->tag          = $data['tag'];
 
         $newhashtag->save();
-        
-        
-		return redirect()->route('admin.hashtags.index', ['hashtag']);
+
+
+        return redirect()->route('admin.hashtags.index', ['hashtag']);
     }
 
 
-    
+
     public function edit(hashtag $hashtag)
     {
         return view('admin.hashtags.edit', compact('hashtag'));
@@ -53,16 +53,16 @@ class HashtagController extends Controller
     public function update(Request $request, hashtag $hashtag)
     {
 
-        
+
         $data = $request->all();
 
-        
+
         $hashtag->tag          = $data['tag'];
 
         $hashtag->update();
-        
-        
-		return to_route('admin.hashtags.index', ['hashtag' => $hashtag]);
+
+
+        return to_route('admin.hashtags.index', ['hashtag' => $hashtag]);
     }
 
     public function destroy(hashtag $hashtag)
