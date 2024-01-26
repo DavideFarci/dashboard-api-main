@@ -15,7 +15,10 @@ td{
     gap: 0.3em;
     align-items: center;
 }
-
+.radius{
+    border-radius: 10px !important;
+    text-transform: uppercase;
+}
 .a-notlink{
     color: black;
     text-transform: uppercase;

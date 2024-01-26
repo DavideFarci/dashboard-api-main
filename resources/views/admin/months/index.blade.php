@@ -49,31 +49,40 @@
             <input name="max_pz" id="max_pz" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping">
           </div>
         <div>
-            <h5 class="pt-4">Seleziona i giorni da disabilitare</h5>
-            <div class="btn-group py-1" role="group" aria-label="Basic checkbox toggle button group">
+            <h5 class="pt-4">Seleziona i giorni in cui sei attivo</h5>
+            <div class="btn-group py-1 row g-2 " role="group" aria-label="Basic checkbox toggle button group">
 
                 @foreach ($days as $day)
-                <input class="btn-check" type="checkbox" name="days_off[]" id="days_off_{{ $day }}" value="{{ $day }}">
-                <label class="btn btn-outline-dark" for="days_off_{{ $day }}">{{ $days_name[$day] }}</label>
-                <div>
-                    <h5 class="pt-4">Seleziona le fasce orarie disponibili</h5>
-        
-                    <div class="btn-group  py-1" role="group" aria-label="Basic checkbox toggle button group">
-        
-                        @foreach ($times as $time)
-                   
+                
+                    <input class="btn-check" type="checkbox" name="days_off[]" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample{{$day}}" aria-expanded="false" aria-controls="multiCollapseExample{{$day}}" id="days_off_{{ $day }}" value="{{ $day }}">
+                    <label class="btn btn-outline-dark radius col" for="days_off_{{ $day }}">{{ $days_name[$day] }}
+                        <div class="collapse multi-collapse" id="multiCollapseExample{{$day}}">
+                            <div class="card card-body">
+                                <div>
+                                    <h5 class="pt-4 d-flex g-2">Seleziona le fasce orarie disponibili</h5>
                         
-                        <select name="times_slot[]" id="">
-                            <option value="0" >{{ $time['time'] }} - ND</option>
-                            <option value="1">{{ $time['time'] }} - asporto</option>
-                            <option value="2">{{ $time['time'] }} - tavoli</option>
-                            <option value="3">{{ $time['time'] }} - tutti</option>
-                        </select>
-                      
-                        @endforeach
-                    </div>
-                    
-                </div>
+                                   
+                        
+                                        @foreach ($times as $time)
+                                   
+                                        
+                                        <select  class="form-select col" name="times_slot_{{$day}}[]" id="">
+                                            <option value="0" >{{ $time['time'] }} - ND</option>
+                                            <option value="1">{{ $time['time'] }} - asporto</option>
+                                            <option value="2">{{ $time['time'] }} - tavoli</option>
+                                            <option value="3">{{ $time['time'] }} - tutti</option>
+                                        </select>
+                                      
+                                        @endforeach
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                       
+                   
+                    </label>
+
                 @endforeach
             </div>
         </div>

@@ -59,22 +59,105 @@ class DateController extends Controller
             $max_reservations = $request->input("max_reservations");
             $max_pz = $request->input("max_pz");
             $days_off = $request->input("days_off");
-            $times_slot = $request->input("times_slot");
-            // dump($times_slot);
-            $times = [
-                ['time' => '19:00', 'set' => ''],
-                ['time' => '19:30', 'set' => ''],
-                ['time' => '20:00', 'set' => ''],
-                ['time' => '20:30', 'set' => ''],
-                ['time' => '21:00', 'set' => ''],
-                ['time' => '21:30', 'set' => ''],
+            $times_slot1 = $request->input("times_slot_1");
+            $times_slot2 = $request->input("times_slot_2");
+            $times_slot3 = $request->input("times_slot_3");
+            $times_slot4 = $request->input("times_slot_4");
+            $times_slot5 = $request->input("times_slot_5");
+            $times_slot6 = $request->input("times_slot_6");
+            $times_slot7 = $request->input("times_slot_7");
+            //  dump($times_slot1);
+            //  dump($times_slot2);
+            //  dump($times_slot3);
+            //  dump($times_slot4);
+            //  dump($times_slot5);
+            //  dump($times_slot6);
+            //  dd($times_slot7);
+            $timesDay = [
+                [
+                    ['time' => '19:00', 'set' => ''],
+                    ['time' => '19:30', 'set' => ''],
+                    ['time' => '20:00', 'set' => ''],
+                    ['time' => '20:30', 'set' => ''],
+                    ['time' => '21:00', 'set' => ''],
+                    ['time' => '21:30', 'set' => ''],
+                ],
+                [
+                    ['time' => '19:00', 'set' => ''],
+                    ['time' => '19:30', 'set' => ''],
+                    ['time' => '20:00', 'set' => ''],
+                    ['time' => '20:30', 'set' => ''],
+                    ['time' => '21:00', 'set' => ''],
+                    ['time' => '21:30', 'set' => ''],
+                ],
+                [
+                    ['time' => '19:00', 'set' => ''],
+                    ['time' => '19:30', 'set' => ''],
+                    ['time' => '20:00', 'set' => ''],
+                    ['time' => '20:30', 'set' => ''],
+                    ['time' => '21:00', 'set' => ''],
+                    ['time' => '21:30', 'set' => ''],
+                ],
+                [
+                    ['time' => '19:00', 'set' => ''],
+                    ['time' => '19:30', 'set' => ''],
+                    ['time' => '20:00', 'set' => ''],
+                    ['time' => '20:30', 'set' => ''],
+                    ['time' => '21:00', 'set' => ''],
+                    ['time' => '21:30', 'set' => ''],
+                ],
+                [
+                    ['time' => '19:00', 'set' => ''],
+                    ['time' => '19:30', 'set' => ''],
+                    ['time' => '20:00', 'set' => ''],
+                    ['time' => '20:30', 'set' => ''],
+                    ['time' => '21:00', 'set' => ''],
+                    ['time' => '21:30', 'set' => ''],
+                ],
+                [
+                    ['time' => '19:00', 'set' => ''],
+                    ['time' => '19:30', 'set' => ''],
+                    ['time' => '20:00', 'set' => ''],
+                    ['time' => '20:30', 'set' => ''],
+                    ['time' => '21:00', 'set' => ''],
+                    ['time' => '21:30', 'set' => ''],
+                ],
+                [
+                    ['time' => '19:00', 'set' => ''],
+                    ['time' => '19:30', 'set' => ''],
+                    ['time' => '20:00', 'set' => ''],
+                    ['time' => '20:30', 'set' => ''],
+                    ['time' => '21:00', 'set' => ''],
+                    ['time' => '21:30', 'set' => ''],
+                ],     
             ];
-            for ($i = 0; $i < count($times); $i++) {
-                $times[$i]['set'] = $times_slot[$i];
-            }
+     
+                
+                for ($i = 0; $i < count($timesDay[0]); $i++) {
+                    $timesDay[0][$i]['set'] = $times_slot1[$i];
+                }
+                for ($i = 0; $i < count($timesDay[1]); $i++) {
+                    $timesDay[1][$i]['set'] = $times_slot2[$i];
+                }
+                for ($i = 0; $i < count($timesDay[2]); $i++) {
+                    $timesDay[2][$i]['set'] = $times_slot3[$i];
+                }
+                for ($i = 0; $i < count($timesDay[3]); $i++) {
+                    $timesDay[3][$i]['set'] = $times_slot4[$i];
+                }
+                for ($i = 0; $i < count($timesDay[4]); $i++) {
+                    $timesDay[4][$i]['set'] = $times_slot5[$i];
+                }
+                for ($i = 0; $i < count($timesDay[5]); $i++) {
+                    $timesDay[5][$i]['set'] = $times_slot6[$i];
+                }
+                for ($i = 0; $i < count($timesDay[6]); $i++) {
+                    $timesDay[6][$i]['set'] = $times_slot7[$i];
+                }
 
-            // @dd("max_reservations: " . $max_reservations, "times_slot: " . $times_slot, "days_off: " . $days_off);
-            // dump($times);
+            //dd($timesDay);
+            // @dd("max_reservations: " . $max_reservations, "times_slot: " . $timesDay_slot, "days_off: " . $days_off);
+            // dump($timesDay);
 
             // Pulisco le tabelle
             DB::table('dates')->truncate();
@@ -83,7 +166,7 @@ class DateController extends Controller
 
             // Eseguo il seeder
             $seeder = new DatesTableSeeder();
-            $seeder->setVariables($max_reservations, $max_pz, $times, $days_off);
+            $seeder->setVariables($max_reservations, $max_pz, $timesDay, $days_off);
             $seeder->run();
 
             // Ripristino le prenotazioni
@@ -91,7 +174,7 @@ class DateController extends Controller
 
             return back()->with('success', 'Seeder avvenuto con successo')->with('response', [
                 'success' => true,
-                'message' => 'Seeder avvenuto con successo',
+                'message'  => 'Seeder avvenuto con successo',
             ]);
         } catch (Exception $e) {
             $trace = $e->getTrace();

@@ -29,7 +29,7 @@ class DatesTableSeeder extends Seeder
     {
         $currentDate = new DateTime();
         $times = $this->times;
-        $disabledDays = $this->days_off;
+        $abledDays = $this->days_off;
 
         // dump($times);
 
@@ -54,7 +54,7 @@ class DatesTableSeeder extends Seeder
                     'y' => $currentDate->format('Y'),
                 ]);
 
-                foreach ($times as $time) {
+                foreach ($times[$currentDayOfWeek - 1] as $time) {
                     // dump($time, $time['set']);
                     if ($time['set']) {
                         Date::create([
@@ -67,9 +67,9 @@ class DatesTableSeeder extends Seeder
                             'max_res' => $this->max_reservations,
                             'max_pz' => $this->max_pz,
                             'year' => $currentDate->format('Y'),
-                            'visible' => (1 && (!$disabledDays || !in_array($currentDayOfWeek, $disabledDays))),
                             'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time['time'],
                             'status' => $time['set'],
+                            'visible' => (1 && in_array($currentDayOfWeek, $abledDays)),
                         ]);
                     }
                 }
