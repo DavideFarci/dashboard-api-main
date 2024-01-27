@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Exception;
 use Carbon\Carbon;
 use App\Models\Date;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Exception;
 
 class DateController extends Controller
 {
@@ -50,11 +51,11 @@ class DateController extends Controller
                 "dataDiFine" => $dataFine->day . "/" . $dataFine->month . "/" . $dataFine->year,
                 'results' => $dates,
             ]);
-        } catch (ModelNotFoundException $e) {
+        } catch (QueryException $e) {
             return response()->json([
                 'success' => false,
-                'error' => 'Dati non trovati',
-            ], 404);
+                'message' => 'Errore del database: ' . $e->getMessage(),
+            ]);
         } catch (Exception $e) {
             // Eccezioni generiche, stampo il messaggio restituito
             return response()->json([
@@ -64,10 +65,19 @@ class DateController extends Controller
         }
     }
 
+    private $validations = [
+        'year'  => 'required|integer',
+        'month' => 'required|integer',
+        'day'   => 'required|integer',
+        'time'  => 'required|string',
+    ];
+
     // restituisce una data in formato originale in base alla richiesta di prenotazione tavolo
     public function findDate(Request $request)
     {
         try {
+            $request->validate($this->validations);
+
             $year = $request->input("year");
             $month = $request->input("month");
             $day = $request->input("day");
@@ -82,11 +92,11 @@ class DateController extends Controller
                 'success' => true,
                 'results' => $date,
             ]);
-        } catch (ModelNotFoundException $e) {
+        } catch (QueryException $e) {
             return response()->json([
                 'success' => false,
-                'error' => 'Dati non trovati',
-            ], 404);
+                'message' => 'Errore del database: ' . $e->getMessage(),
+            ]);
         } catch (Exception $e) {
             // Eccezioni generiche, stampo il messaggio restituito
             return response()->json([

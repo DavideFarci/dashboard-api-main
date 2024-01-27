@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('hashtags', function (Blueprint $table) {
             $table->id();
-            $table->string('tag');
+            $table->string('tag', 50);
         });
     }
 

@@ -18,12 +18,12 @@ return new class extends Migration
             // $table->unsignedBigInteger('date_id')->nullable(); 
 
             // $table->foreign('date_id')->references('id')->on('dates')->nullOnDelete();
-            $table->string('date_slot', 30);
-            $table->string('name', 50)->nullable();
-            $table->string('phone', 20)->nullable();
-            $table->string('status', 10)->nullable();
-            $table->string('n_person', 50)->nullable();
-            $table->string('message', 100)->nullable();
+            $table->string('date_slot', 16);
+            $table->string('name', 50);
+            $table->string('phone', 20);
+            $table->string('status', 10);
+            $table->string('n_person', 10);
+            $table->string('message', 500)->nullable();
             $table->timestamps();
         });
     }

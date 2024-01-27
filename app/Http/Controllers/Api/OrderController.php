@@ -18,17 +18,17 @@ use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
 
-    // private $validations = [ // to do
-    //     'name'          => 'required|string|min:5|max:50',
-    //     'surname'          => 'required|string|min:5|max:50',
-    //     'phone'          => 'required|string|min:5|max:50',
-    //     'email'         => 'required|email|min:5|max:255',
-    //     'message'       => 'required|string',
-    //     'newsletter'    => 'required|boolean',
-    // ];
+    private $validations = [
+        'name'          => 'required|string|min:5|max:50',
+        'phone'         => 'required|string|min:5|max:50',
+        'email'         => 'required|email|min:5|max:100',
+        'message'       => 'string|min:5|max:1000',
+        'date_slot'     => 'required|string|min:16|max:16',
+    ];
 
     public function store(Request $request)
     {
+        $request->validate($this->validations);
         // salvare i dati del Order nel database
         $total_price = 0;
         $data = $request->all();

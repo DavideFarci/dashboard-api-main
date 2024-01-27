@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
     private $validations = [
-        'title'          => 'required|string|min:3|max:100',
+        'title'         => 'required|string|min:2|max:100',
         'description'   => 'required|string|max:2000',
         'image'         => 'string|max:300',
-        'link'          => 'required|string'
+        'link'          => 'string'
     ];
 
     public function index()
