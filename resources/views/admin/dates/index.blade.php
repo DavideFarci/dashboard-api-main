@@ -14,10 +14,15 @@
         <div class="mydata">
           
             
+            @foreach ($dates as $date)
             
-            <tbody class="body-cat">
-                @foreach ($dates as $date)
+            @if($date->visible == 1)
+                
                 <div class="mycard">
+            @else
+                    
+                <div class="mycard myc-off">
+            @endif
                     <div class="left-c">
                         <div class="data">
 
@@ -26,11 +31,11 @@
                             <span>{{$date->day}}/{{$date->month}}/{{$date->year}}</span>
                         </div>
                         <div class="res">
-                            <h3>PEZZI DISPONIBILI</h3>
+                            <h3>Pezzi DisponibiliI</h3>
                             <div class="n_res">{{$date->reserved}}</div>    
                         </div>
                         <div class="res">
-                            <h3>POSTI DISPONIBILI</h3>
+                            <h3>Posti DisponibiliI</h3>
                             <div class="n_res">{{$date->reserved_pz}}</div>
                         </div>
                     </div>
@@ -63,37 +68,37 @@
 
                         </div>
                         
-                        @if($date->visible == 1)
-                            
-                        <div class="visible-on">
-                            <span class="">visibile</span> 
-                            
-                            <form action="{{ route('admin.dates.updatestatus', $date->id) }}" method="post">
-                                @csrf
-                                <button class="btn btn-danger">Modifica visibilità</button>
-                            </form>
-                        </div>
-                        @else
-                            
-                        <div class="visible">
-                            <span class="">non visibile</span> 
-                            
-                            <form action="{{ route('admin.dates.updatestatus', $date->id) }}" method="post">
-                                @csrf
-                                <button class="btn btn-success">Modifica visibilità</button>
-                            </form>
-                            
-                        </div>
-                        @endif
                     </div>
                     
+                    @if($date->visible == 1)
+                        
+                    <div class="visible-on">
+                        <span class="">visibile</span> 
+                        
+                        <form action="{{ route('admin.dates.updatestatus', $date->id) }}" method="post">
+                            @csrf
+                            <button class="btn btn-danger">Modifica visibilità</button>
+                        </form>
+                    </div>
+                    @else
+                        
+                    <div class="visible">
+                        <span class="">non visibile</span> 
+                        
+                        <form action="{{ route('admin.dates.updatestatus', $date->id) }}" method="post">
+                            @csrf
+                            <button class="btn btn-success">Modifica visibilità</button>
+                        </form>
+                        
+                    </div>
+                    @endif
                 </div>
                         
                     
                     
                     
              
-                @endforeach
+            @endforeach
      
         </div>
 
