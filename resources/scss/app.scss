@@ -240,3 +240,141 @@ td{
         text-transform: uppercase;
         font-weight: bolder;
     }
+
+
+.mydata{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.mycard{
+    width: 100%;
+    
+    border: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    .left-c{
+        width: 50%;
+        display: flex;
+
+        text-align: center;
+        .data{
+            width: 60%;
+        }
+        .data, .res{
+            gap: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 20px;
+            padding: 2rem;
+            border-right: 1px solid black;
+            h2{
+                font-size: 40px;
+                
+            }
+            .day_w{
+                border: 1px solid black;
+                padding: 10px;
+                width: 100%;
+            }
+        }
+        .res{
+            width: 30%;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            align-items: center;
+            justify-content: space-between;
+            h3{
+                font-size: 20px;
+            }
+            .n_res{
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                margin-top: -15px;
+                font-size: 40px;
+                
+            }
+        }
+        
+        
+    }
+    .right-c{
+        display: flex;
+
+        width: 50%;
+        .max{
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-transform: uppercase;
+            h3{
+                font-size: 20px;
+
+            }
+            span{
+                
+                font-size: 30px;
+            }
+            
+        }
+        .visible-on{
+            background-color: #13d162;
+            height: 100%;
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            border-right: 1px solid black;
+            border-left: 1px solid black;
+            align-items: center;
+            span{
+                color: white;
+                text-transform: uppercase;
+                font-size: 20px;
+                font-weight: bolder;
+                text-shadow: 0 0 15px rgba(0, 0, 0, 0.555);
+            }
+            button{
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.555);
+            }
+            
+        }
+        .visible{
+            background-color: rgb(191, 5, 5);
+            height: 100%;
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            border-right: 1px solid black;
+            border-left: 1px solid black;
+            align-items: center;
+            span{
+                color: white;
+                text-transform: uppercase;
+                font-size: 20px;
+                font-weight: bolder;
+                text-shadow: 0 0 15px rgba(0, 0, 0, 0.555);
+            }
+            button{
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.555);
+            }
+
+        }
+
+    }
+
+}

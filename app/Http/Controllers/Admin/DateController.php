@@ -50,6 +50,26 @@ class DateController extends Controller
 
         return redirect()->back();
     }
+    public function upmaxpz($date_id)
+    {
+        $date = Date::find($date_id);
+        $date->max_pz++;
+        $date->save();
+
+        return redirect()->back();
+    }
+
+    public function downmaxpz($date_id)
+    {
+        $date = Date::find($date_id);
+        if ($date->max_pz > 0) {
+
+            $date->max_pz--;
+            $date->save();
+        }
+
+        return redirect()->back();
+    }
 
     public function runSeeder(Request $request)
     {

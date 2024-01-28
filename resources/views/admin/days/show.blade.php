@@ -1,126 +1,101 @@
 @extends('layouts.base')
 
 @section('contents')
-    {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
-    {{-- 
-        // Array risultante
-        $resultArray = [];
+@php
+        $days_name = [' ','lunedì', 'martedi', 'mercoledì', 'giovedì', 'venerd', 'sabato', 'domenica'];
+        @endphp
 
-        // Raggruppa per day
-        foreach ($selectedDate as $item) {
-            $day = $item['day'];
-            $time = [
-                    'time' => [],
-                    'reserved' => [],
-                    'max_res' => [],
-                    'visible' => [],]
+
+    
+<h1 class="m-5">GESTISCI IL IL GIORNO</h1>    
+
+
+
+        <div class="mydata">
+          
             
-            // Se il giorno non esiste nell'array risultante, inizializza l'elemento
-            if (!isset($resultArray[$day])) {
-                $resultArray[$day] = [
-                    'time' => [],
-                    'reserved' => [],
-                    'max_res' => [],
-                    'visible' => [],
-                ];
-            }
             
-            // Aggiungi i valori di time, reserved e max_res all'array risultante
-            $resultArray[$day]['time'][] = $item['time'];
-            $resultArray[$day]['reserved'][] = $item['reserved'];
-            $resultArray[$day]['max_res'][] = $item['max_res'];
-            $resultArray[$day]['visible'][] = $item['visible'];
-        }
-
-        // Output dei risultati
-        @dump($resultArray)
-    ?> --}}
-
-
-
-    <h1>GESTISCI IL MESE</h1>    
-
-
-
-        <table class="mytable">
-            <thead>
-                <tr>
-
-                    <th class="expire-mobile-s">ID</th>
-                    <th style="max-width:60px">DATA</th>
-                    <th class="expire-mobile-s">ORARIO</th>
-                    <th class="expire-mobile">MAX RES</th>
-                    <th class="expire-mobile">PRENOTATI</th>
-                    <th class="expire-mobile-s">VISIBILE</th>
-                    <th></th>
-            
-
- 
-
-                    <th class="expire-mobile-s"></th>
-
-                </tr>
-            </thead>
             <tbody class="body-cat">
                 @foreach ($dates as $date)
-               
+                <div class="mycard">
+                    <div class="left-c">
+                        <div class="data">
+
+                            <h2>{{$date->time}}</h2>
+                            <span class="day_w">{{$days_name[$date->day_w]}}</span>
+                            <span>{{$date->day}}/{{$date->month}}/{{$date->year}}</span>
+                        </div>
+                        <div class="res">
+                            <h3>PEZZI DISPONIBILI</h3>
+                            <div class="n_res">{{$date->reserved}}</div>    
+                        </div>
+                        <div class="res">
+                            <h3>POSTI DISPONIBILI</h3>
+                            <div class="n_res">{{$date->reserved_pz}}</div>
+                        </div>
+                    </div>
+                    <div class="right-c">
+                        <div class="max">
+                            <h3>Modifica Max Posti</h3>
+                            <form action="{{ route('admin.dates.upmaxres', $date->id) }}" method="post">
+                                @csrf
+                                <button  class="btn btn-dark">+</button>
+                            </form>
+                            <span>{{$date->max_res}}</span>
+
+                            <form action="{{ route('admin.dates.downmaxres', $date->id) }}" method="post">
+                                @csrf
+                                <button  class="btn btn-dark">-</button>
+                            </form>
+                        </div>
+                        <div class="max">
+                            <h3>Modifica Max Pezzi</h3>
+                            <form action="{{ route('admin.dates.upmaxpz', $date->id) }}" method="post">
+                                @csrf
+                                <button  class="btn btn-dark">+</button>
+                            </form>
+                            <span>{{$date->max_pz}}</span>
+
+                            <form action="{{ route('admin.dates.downmaxpz', $date->id) }}" method="post">
+                                @csrf
+                                <button  class="btn btn-dark">-</button>
+                            </form>
+
+                        </div>
                         
-                    
-                    <tr >
-                      
-                        
-
-                        
-                        <td class="expire-mobile-s">{{$date->id}}</td>
-                        <td class="">{{$date->day}}/{{$date->month}}/{{$date->year}}</td>
-                        <td class="expire-mobile-s">{{$date->time}}</td>
-                        <td class="expire-mobile ">
-                            <div class="btnform" style="display: flex; align-items: center; text-align: center">
-
-                                <form style="width: 45% !important; " action="{{ route('admin.dates.upmaxres', $date->id) }}" method="post">
-                                    @csrf
-                                    <button  class="btn btn-dark">+</button>
-                                </form>
-                                <strong>{{$date->max_res}}</strong>
-
-                                <form style="width: 45% !important; " action="{{ route('admin.dates.downmaxres', $date->id) }}" method="post">
-                                    @csrf
-                                    <button  class="btn btn-dark">-</button>
-                                </form>
-                            </div>
-                      
-                        </td>
-        
-                        <td class="expire-mobile-s">{{$date->reserved}}</td>
-
-                        <td class="">
-                            @if($date->visible == 1)
-
-                                <span class="badge bg-success">visibile</span> 
-                                
-                                @else
-                                
-                                <span class="badge bg-danger">non visibile</span> 
-                                
-                            @endif
+                        @if($date->visible == 1)
                             
-                        
-                        </td>
-                        <td class="expire-mobile-s">
+                        <div class="visible-on">
+                            <span class="">visibile</span> 
+                            
                             <form action="{{ route('admin.dates.updatestatus', $date->id) }}" method="post">
                                 @csrf
-                                <button class="btn btn-warning">Modifica visibilità</button>
+                                <button class="btn btn-danger">Modifica visibilità</button>
                             </form>
-                        </td>
-                       
-
-
+                        </div>
+                        @else
+                            
+                        <div class="visible">
+                            <span class="">non visibile</span> 
+                            
+                            <form action="{{ route('admin.dates.updatestatus', $date->id) }}" method="post">
+                                @csrf
+                                <button class="btn btn-success">Modifica visibilità</button>
+                            </form>
+                            
+                        </div>
+                        @endif
+                    </div>
+                    
+                </div>
                         
-
-                    </tr>
+                    
+                    
+                    
+             
                 @endforeach
-            </tbody>
-        </table>
+     
+        </div>
 
  
 

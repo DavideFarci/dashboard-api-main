@@ -82,8 +82,13 @@ Route::middleware(['auth', 'verified'])
 
         // Rotte Date 
         Route::post('/dates/updatestatus/{order_id}',       [DateController::class, 'updatestatus'])->name('dates.updatestatus');
+
         Route::post('/dates/upmaxres/{order_id}',           [DateController::class, 'upmaxres'])->name('dates.upmaxres');
         Route::post('/dates/downmaxres/{order_id}',         [DateController::class, 'downmaxres'])->name('dates.downmaxres');
+
+        Route::post('/dates/upmaxpz/{order_id}',           [DateController::class, 'upmaxpz'])->name('dates.upmaxpz');
+        Route::post('/dates/downmaxpz/{order_id}',         [DateController::class, 'downmaxpz'])->name('dates.downmaxpz');
+
         Route::post('/dates/runSeeder',                     [DateController::class, 'runSeeder'])->name('dates.runSeeder');
     });
 
