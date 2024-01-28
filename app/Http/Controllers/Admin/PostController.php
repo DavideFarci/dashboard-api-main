@@ -13,7 +13,7 @@ class PostController extends Controller
     private $validations = [
         'title'         => 'required|string|min:2|max:100',
         'description'   => 'required|string|max:2000',
-        'image'         => 'string|max:300',
+        'image'         => 'required',
         'link'          => 'string'
     ];
 
