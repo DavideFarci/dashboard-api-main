@@ -62,7 +62,7 @@
         @enderror
     </div>
 
-    <div class="mb-3 ingredienti_ ">
+    <div class="mb-3 ingredienti_">
         <h3>Ingredienti</h3>
         @foreach($tags as $tag)
             <div class="mb-3 form-check">
@@ -81,7 +81,7 @@
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
-                 @enderror
+            @enderror
          
         @endforeach
     </div>
