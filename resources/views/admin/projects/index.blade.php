@@ -46,7 +46,22 @@
             <tbody>
                 @foreach ($projects as $project)
                     <tr>
-                        <th class="expire-mobile">{{$project->id}}</th>
+                        @if($project->visible == 1)
+                        
+                        <td class="visible-on">
+                            <span class="">visibile</span> 
+                            
+                           
+                        </td>
+                        @else
+                            
+                        <td class="visible">
+                            <span class="">non visibile</span> 
+                            
+                            
+                            
+                        </td>
+                        @endif
                         <td>
                             <a style="color:white" class="ts bs a-notlink badge bg-success rounded-pill" href="{{ route('admin.projects.show', ['project' =>$project]) }}" > {{$project->name}}</a>
                            
@@ -71,6 +86,11 @@
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger" >Elimina</button>
+                                </form>
+                                <form action="{{ route('admin.projects.updatestatus', $project->slug)}}" method="post">
+                                    @csrf
+
+                                    <button class="btn btn-danger" >Modifica visibilità</button>
                                 </form>
 
                             </div>

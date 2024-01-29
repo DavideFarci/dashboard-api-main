@@ -169,4 +169,15 @@ class ProjectController extends Controller
 
         return to_route('admin.projects.trashed')->with('delete_success', $project);
     }
+    public function updatestatus($slug)
+    {
+        $project = Project::where('slug', $slug)->firstOrFail();
+        if ($project) {
+            $project->visible = !$project->visible; // Inverte lo stato corrente
+            $project->save();
+        }
+        return redirect()->back();
+
+       
+    }
 }
