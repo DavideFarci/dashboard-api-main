@@ -394,6 +394,71 @@ td{
 
     background: #d1131321 !important;
 }
+
+
+.myproj-c{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .myproj{
+        display: flex;
+        background-color: #eff3fd;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border: 2px solid black;
+        border-radius: 10px;
+        section{
+            width: 33%;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .s1{
+            h4{
+                text-transform: uppercase;
+            }
+            .cat{
+                font-style: italic;
+            }
+        }
+    }
+    .myproj-off{
+        display: flex;
+        background-color: #eaaa9c;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border: 2px solid black;
+        border-radius: 10px;
+        section{
+            width: 33%;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .s1{
+            h4{
+                text-transform: uppercase;
+            }
+            .cat{
+                font-style: italic;
+            }
+        }
+    }
+}
+
+
+
+
+
+
 @media (max-width:1050px) {
     .mycard{
         flex-direction: column;
@@ -404,6 +469,12 @@ td{
     }
 }
 @media (max-width:530px) {
+    .myproj, .myproj-off{
+        flex-direction: column;
+        section{
+            width: 100% !important;
+        }
+    }
     .mycard{
         .left-c{
             flex-direction: column;

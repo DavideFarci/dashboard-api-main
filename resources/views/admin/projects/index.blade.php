@@ -25,80 +25,65 @@
 
 
     
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th class="expire-mobile">ID</th>
-                    <th>PRODOTTO</th>
-                    <th class="expire-mobile-s">IMMAGINE</th>
-                    <th class="expire-mobile-s">CATEGORIA</th>
-                    <th class="expire-mobile-s">PREZZO</th>
-                    <th class="expire-mobile">INGREDIENTI</th>
-                    <th>
-                        <div class="btn-cont">
-                            <a class="btn btn-success" href="{{ route('admin.projects.create') }}">nuovo</a>
-                            <a class="btn btn-danger" href="{{ route('admin.projects.trashed') }}">cestino</a>
+        <div class="myproj-c">
+            <h1 class="m-3">Modifica i tuo prodotti</h1>
 
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($projects as $project)
-                    <tr>
-                        @if($project->visible == 1)
-                        
-                        <td class="visible-on">
-                            <span class="">visibile</span> 
-                            
-                           
-                        </td>
-                        @else
-                            
-                        <td class="visible">
-                            <span class="">non visibile</span> 
-                            
-                            
-                            
-                        </td>
-                        @endif
-                        <td>
-                            <a style="color:white" class="ts bs a-notlink badge bg-success rounded-pill" href="{{ route('admin.projects.show', ['project' =>$project]) }}" > {{$project->name}}</a>
-                           
-                        </td>
-                        <td class="expire-mobile-s"> 
-                            @if ($project->image)
-                                <img class="my-image" src="{{ asset('public/storage/' . $project->image) }}" alt="{{ $project->title }}">
-                            @endif
+            <a class="btn my-btn btn-success m-2" href="{{ route('admin.projects.create') }}">Nuovo</a>
+            <a class="btn my-btn btn-danger m-2" href="{{ route('admin.projects.trashed') }}">Cestino</a>
 
-                        </td>
-                        <td class="expire-mobile-s">{{$project->category->name}}</td>
-                        <td class="expire-mobile-s">€{{$project->price / 100}}</td>
-                        <td class="expire-mobile">
+
+            @foreach ($projects as $project)
+
+            @if($project->visible == 1)
+            <div class="myproj">
+            @else 
+           
+            <div class="myproj-off">
+          
+            @endif
+
+                    <section class="s1">
+                        <h4>{{$project->name}}</h4>
+                        <span class="cat">{{$project->category->name}}</span>
+                        <img class="my-image" src="{{ asset('public/storage/' . $project->image) }}" alt="{{ $project->title }}">
+                    </section>
+                    <section class="expire-mobile s2">
+                        <h5>Ingredienti:</h5>
+                        <p>
                             @foreach ($project->tags as $tag)
-                                <span>{{ $tag->name }}</span>{{ !$loop->last ? ',' : '' }}
+                                <span>{{ $tag->name }}</span>{{ !$loop->last ? ', ' : '.' }}
                             @endforeach
-                        </td>
-                        <td >
-                            <div class="btn-cont">
-                                <a class="btn my-btn btn-warning" href="{{ route('admin.projects.edit', ['project' =>$project]) }}">Modifica</a>
-                                <form action="{{ route('admin.projects.destroy', ['project' =>$project])}}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger" >Elimina</button>
-                                </form>
-                                <form action="{{ route('admin.projects.updatestatus', $project->slug)}}" method="post">
-                                    @csrf
+                        </p>
+                        <div class="price">€{{$project->price / 100}}</div>
+                    </section>
+                    <section class="s3">
+                        <a class="btn my-btn btn-warning" href="{{ route('admin.projects.edit', ['project' =>$project]) }}">Modifica</a>
+                            <form action="{{ route('admin.projects.destroy', ['project' =>$project])}}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger" >Elimina</button>
+                            </form>
+                            @if($project->visible == 1)
+                            <form action="{{ route('admin.projects.updatestatus', $project->slug)}}" method="post">
+                                @csrf
 
-                                    <button class="btn btn-danger" >Modifica visibilità</button>
-                                </form>
+                                <button class="btn btn-warning" >Nascondi</button>
+                            </form>
+                            @else 
+                            <form action="{{ route('admin.projects.updatestatus', $project->slug)}}" method="post">
+                                @csrf
 
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                                <button class="btn btn-success" >Mostra</button>
+                            </form>
+                          
+                            @endif
+                    </section>
+                </div>
+
+            
+            @endforeach
+        </div>
+  
 
     {{ $projects->links() }}
 @endsection
