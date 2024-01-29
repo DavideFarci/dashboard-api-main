@@ -9,31 +9,40 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-   
+
     public function index()
     {
         $orders = Order::paginate(15);;
         $orderProject = OrderProject::all();
         //dd($quantity_item );
-        return view('admin.orders.index', compact('orders', 'orderProject' ));
+        return view('admin.orders.index', compact('orders', 'orderProject'));
     }
 
-    
+
     public function show($id)
     {
         $order = Order::where('id', $id)->firstOrFail();
         $orderProject = OrderProject::all();
-        return view('admin.orders.show', compact('order', 'orderProject' ));
+        return view('admin.orders.show', compact('order', 'orderProject'));
     }
 
-    
-    public function updatestatus($order_id)
+    public function confirmOrder($order_id)
     {
         $order = Order::find($order_id);
         if ($order) {
-            $order->status = !$order->status; // Inverte lo stato corrente
+            $order->status = 1;
             $order->save();
         }
-        return redirect()->back();
+        return redirect("https://wa.me/" . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+    }
+
+    public function rejectOrder($order_id)
+    {
+        $order = Order::find($order_id);
+        if ($order) {
+            $order->status = 2;
+            $order->save();
+        }
+        return redirect("https://wa.me/" . $order->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
     }
 }

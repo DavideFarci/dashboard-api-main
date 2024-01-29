@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Date;
+use App\Models\Order;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,13 +27,23 @@ class ReservationController extends Controller
         return view('admin.reservations.show', compact('reservation', 'dates'));
     }
 
-    public function updatestatus($reservation_id)
+    public function confirmReservation($reservation_id)
     {
         $reservation = Reservation::find($reservation_id);
         if ($reservation) {
-            $reservation->status = !$reservation->status; // Inverte lo stato corrente
+            $reservation->status = 1;
             $reservation->save();
         }
-        return redirect()->back();
+        return redirect("https://wa.me/" . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+    }
+
+    public function rejectReservation($reservation_id)
+    {
+        $reservation = Reservation::find($reservation_id);
+        if ($reservation) {
+            $reservation->status = 2;
+            $reservation->save();
+        }
+        return redirect("https://wa.me/" . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
     }
 }

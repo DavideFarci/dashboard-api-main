@@ -43,34 +43,36 @@
                         <td class="expire-mobile-s">{{substr($reservation->date_slot, 0, -6)}}</td>
                         <td class="expire-mobile-s">{{substr($reservation->date_slot, 11)}}</td>
                         <td>
-                            @if($reservation->status)
+                            @if($reservation->status == 1)
 
-                                <span class="badge bg-success">Confermato</span> 
+                                <span class="badge bg-success">Completato</span> 
                                 
-                                @else
-                                
-                                <span class="badge bg-danger">Da confermare</span> 
+                            @elseif($reservation->status == 2)    
+
+                                <span class="badge bg-danger">Annullato</span> 
+
+                            @else
+
+                                <span class="badge bg-warning">In Elaborazione</span> 
                                 
                             @endif
                             
                         
                         </td>
-                        <td class="expire-mobile-s">
-                            <form action="{{ route('admin.reservations.updatestatus', $reservation->id) }}" method="post">
+                        <td>
+                            <form class="d-inline" action="{{ route('admin.reservations.confirmReservation', $reservation->id) }}" method="post">
                                 @csrf
-                                <button class="btn btn-warning">Modifica Stuatus</button>
+                                <button value="1" class="expire-mobile-s btn btn-warning">
+                                    Conferma
+                                </button>
+                            </form>
+                            <form class="d-inline" action="{{ route('admin.reservations.rejectReservation', $reservation->id) }}" method="post">
+                                @csrf
+                                <button value="2" class="expire-mobile-s btn btn-danger">
+                                    Annulla
+                                </button>
                             </form>
                         </td>
-                        <td>
-                            <a href="https://wa.me/{{$reservation->phone}}?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!">Conferma</a>
-                        </td>
-                        <td>
-                            <a href="https://wa.me/{{$reservation->phone}}?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione">Disdici</a>
-                        </td>
-                        
-
-                        
-
                     </tr>
                 @endforeach
             </tbody>
