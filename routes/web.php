@@ -55,7 +55,8 @@ Route::middleware(['auth', 'verified'])
         Route::post('/orders/rejectOrder/{order_id}',       [OrderController::class, 'rejectOrder'])->name('orders.rejectOrder');
 
         // Rotte Reservations
-        Route::post('/reservations/updatestatus/{order_id}', [ReservationController::class, 'updatestatus'])->name('reservations.updatestatus');
+        Route::post('/reservations/confirmReservation/{reservation_id}',       [ReservationController::class, 'confirmReservation'])->name('reservations.confirmReservation');
+        Route::post('/reservations/rejectReservation/{reservation_id}',       [ReservationController::class, 'rejectReservation'])->name('reservations.rejectReservation');
 
         // Rotte Settings
         Route::put('/settings/allupdate',                    [SettingController::class, 'allupdate'])->name('settings.allupdate');

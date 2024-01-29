@@ -39,7 +39,7 @@
                         <td>
                             @if($order->status == 1)
 
-                                <span class="badge bg-success">Completato</span> 
+                                <span class="badge bg-success">Confermato</span> 
                                 
                             @elseif($order->status == 2)    
 
@@ -74,11 +74,15 @@
                         <td>
                             <form class="d-inline" action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
                                 @csrf
-                                <button value="1" class="expire-mobile-s btn btn-warning">Conferma</button>
+                                <button value="1" class="expire-mobile-s btn btn-warning">
+                                    Conferma
+                                </button>
                             </form>
                             <form class="d-inline" action="{{ route('admin.orders.rejectOrder', $order->id) }}" method="post">
                                 @csrf
-                                <button value="2" class="expire-mobile-s btn btn-danger">Annulla</button>
+                                <button value="2" class="expire-mobile-s btn btn-danger">
+                                    Annulla
+                                </button>
                             </form>
                         </td>
 
