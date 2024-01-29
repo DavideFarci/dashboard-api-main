@@ -85,6 +85,9 @@
                 <label class="form-check-label" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
             </div>
         @endforeach
+        <div class="invalid-feedback">
+            @error('tags') {{ $message }} @enderror
+        </div>
 
     </div>
 

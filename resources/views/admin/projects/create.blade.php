@@ -2,7 +2,7 @@
 
 @section('contents')
 
-<form class="cont_a" method="POST" action="{{ route('admin.projects.store') }} " enctype="multipart/form-data">
+<form class="cont_a" method="POST" action="{{ route('admin.projects.store') }} " enctype="multipart/form-data" >
     @csrf
 
     <div class="mb-3 nome_">
@@ -68,14 +68,21 @@
             <div class="mb-3 form-check">
                 <input
                     type="checkbox"
-                    class="form-check-input"
+                    class="form-check-input @error ('tags') is-invalid @enderror"
                     id="tag{{ $tag->id }}"
                     name="tags[]"
                     value="{{ $tag->id }}"
                     @if (in_array($tag->id, old('tags', []))) checked @endif
+      
                 >
                 <label class="form-check-label" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
             </div>
+            @error('tags') 
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+                 @enderror
+         
         @endforeach
     </div>
 

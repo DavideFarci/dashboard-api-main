@@ -89,7 +89,7 @@ class PostController extends Controller
 
         if (isset($data['image'])) {
             // salvare l'immagine nuova
-            $imagePath = Storage::put('uploads', $data['image']);
+            $imagePath = Storage::put('public/uploads', $data['image']);
 
             // eliminare l'immagine vecchia
             if ($post->image) {

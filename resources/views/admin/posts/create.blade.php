@@ -2,7 +2,7 @@
 
 @section('contents')
 
-<form class="cont_a" method="POST" action="{{ route('admin.posts.store') }} " enctype="multipart/form-data" novalidate>
+<form class="cont_a" method="POST" action="{{ route('admin.posts.store') }} " enctype="multipart/form-data" >
     @csrf
 
     <div class="mb-3 nome_">

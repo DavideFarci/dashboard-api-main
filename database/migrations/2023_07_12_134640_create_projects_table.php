@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('slug', 100);
             $table->string('price', 50);
             $table->string('counter', 50);
-            $table->string('image', 1000)->nullable();
+            $table->string('image')->nullable();
             $table->softDeletes();
         });
     }

@@ -15,8 +15,9 @@ class ProjectController extends Controller
     private $validations = [
         'name'          => 'required|string|min:2|max:100',
         'price'         => 'required|string|min:1|max:50',
-        'counter'       => 'required|string|min:1|max:50',
-        'image'         => 'string|max:1000'
+        'tags'          => 'required',
+
+       
     ];
 
     public function index()
@@ -27,33 +28,44 @@ class ProjectController extends Controller
     }
 
 
-    public function create()
+    public function create(Request $request)
     {
         $categories = Category::all();
         $tags       = Tag::all();
+
         return view('admin.projects.create', compact('categories', 'tags'));
     }
-
-
+    
+    
     public function store(Request $request)
     {
-
-        $request->validate($this->validations);
-
         $data = $request->all();
+        // dump($data['name']);
+        // dump($data['price']);
+        // dump($data['category_id']);
+        // if (isset($data['image'])) {
+        //     dump($data['image']);
+            
+        // }
+        // dd($data['tags']);
 
+      
+            
+        $request->validate($this->validations);
+        
+        
         $newProject = new Project();
-
+        
         if (isset($data['image'])) {
             $imagePath = Storage::put('public/uploads', $data['image']);
             $newProject->image = $imagePath;
         }
-
-
+        
+        
         $newProject->name          = $data['name'];
         $newProject->price         = $data['price'];
         $newProject->counter       = 0;
-        $newProject->slug          = Str::slug($data['name']);
+        $newProject->slug          = Project::slugger($data['name']);
         $newProject->category_id   = $data['category_id'];
 
         $newProject->save();
@@ -61,6 +73,7 @@ class ProjectController extends Controller
         $newProject->tags()->sync($data['tags'] ?? []);
 
         return redirect()->route('admin.projects.index', ['project']);
+      
     }
 
     public function show($slug)
@@ -93,7 +106,7 @@ class ProjectController extends Controller
 
         if (isset($data['image'])) {
             // salvare l'immagine nuova
-            $imagePath = Storage::put('uploads', $data['image']);
+            $imagePath = Storage::put('public/uploads', $data['image']);
 
             // eliminare l'immagine vecchia
             if ($project->image) {
