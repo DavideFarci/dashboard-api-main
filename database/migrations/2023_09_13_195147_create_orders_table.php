@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('email', 100);
             $table->string('message', 1000)->nullable();
             $table->smallInteger('total_price');
+            $table->smallInteger('total_pz');
             $table->string('date_slot', 16);
             $table->tinyInteger('status');
             $table->timestamps();
