@@ -454,7 +454,17 @@ td{
     }
 }
 
-
+.myresord{
+    .s1{
+        display: flex;
+        flex-direction: column;
+        .np{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    }
+}
 
 
 
