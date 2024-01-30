@@ -13,7 +13,7 @@
         6 => ['time' => '21:30', 'set' => ''] ,
     ]; 
     $days = [1, 2, 3, 4, 5, 6, 7];
-    $days_name = [' ','lunedì', 'martedi', 'mercoledì', 'giovedì', 'venerd', 'sabato', 'domenica'];
+    $days_name = [' ','lunedì', 'martedi', 'mercoledì', 'giovedì', 'venerdì', 'sabato', 'domenica'];
 ?>
 
 <div class="row">
@@ -37,16 +37,16 @@
     <form class="d-flex flex-column py-5" style="width: 45% !important; " action="{{ route('admin.dates.runSeeder') }}" method="post" enctype="multipart/form-data">
         @csrf
         <h3>GENERA NUOVE DATE</h3>
-        <h5 class="pt-4">Indica il nuomero di posti a sedere per fascia oraria</h5>
+        <h5 class="pt-4">Indica il numero di posti a sedere per fascia oraria</h5>
         <div class="input-group flex-nowrap py-2">
             <label for="max_reservations" class="input-group-text" >N° di posti a sedere</label>
-            <input name="max_reservations" id="max_reservations" type="number" class="form-control" placeholder="N° di posti a sedere" aria-label="N° di posti a sedere" aria-describedby="addon-wrapping">
+            <input name="max_reservations" id="max_reservations" type="number" class="form-control" placeholder="N° di posti a sedere" aria-label="N° di posti a sedere" aria-describedby="addon-wrapping" value="0">
           </div>
         <div>
-        <h5 class="pt-4">Indica il nuomero massimo di pezzi per l'asporto</h5>
+        <h5 class="pt-4">Indica il numero massimo di pezzi per l'asporto</h5>
         <div class="input-group flex-nowrap py-2">
             <label for="max_pz" class="input-group-text" >N° di pezzi</label>
-            <input name="max_pz" id="max_pz" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping">
+            <input name="max_pz" id="max_pz" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
           </div>
         <div>
             <h5 class="pt-4">Seleziona i giorni in cui sei attivo</h5>

@@ -31,12 +31,12 @@
                             <span>{{$date->day}}/{{$date->month}}/{{$date->year}}</span>
                         </div>
                         <div class="res">
-                            <h3>Pezzi DisponibiliI</h3>
-                            <div class="n_res">{{$date->reserved}}</div>    
+                            <h3>Pezzi Prenotati</h3>
+                            <div class="n_res">{{$date->reserved_pz}}</div>    
                         </div>
                         <div class="res">
-                            <h3>Posti DisponibiliI</h3>
-                            <div class="n_res">{{$date->reserved_pz}}</div>
+                            <h3>Posti Prenotati</h3>
+                            <div class="n_res">{{$date->reserved}}</div>
                         </div>
                     </div>
                     <div class="right-c">
