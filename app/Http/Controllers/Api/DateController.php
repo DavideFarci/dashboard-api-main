@@ -66,10 +66,10 @@ class DateController extends Controller
     }
 
     private $validations = [
-        'year'  => 'required|integer',
-        'month' => 'required|integer',
-        'day'   => 'required|integer',
-        'time'  => 'required|string',
+        'year'  => 'required|integer|between:2023,2050',
+        'month' => 'required|integer|between:1,12',
+        'day'   => 'required|integer|between:1,31',
+        'time'  => 'required|string|size:5',
     ];
 
     // restituisce una data in formato originale in base alla richiesta di prenotazione tavolo

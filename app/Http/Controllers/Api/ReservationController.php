@@ -16,8 +16,8 @@ class ReservationController extends Controller
         'name'      => 'required|string|max:50',
         'phone'     => 'required|string|max:20',
         'n_person'  => 'required|string|max:10',
-        'message'   => 'required|string|max:500',
-        'date_slot' => 'required|string|max:16',
+        'message'   => 'nullable|string|max:1000',
+        'date_slot' => 'required|string|size:16',
     ];
 
     public function store(Request $request)

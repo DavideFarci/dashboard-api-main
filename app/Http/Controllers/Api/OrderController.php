@@ -20,10 +20,10 @@ class OrderController extends Controller
 
     private $validations = [
         'name'          => 'required|string|min:5|max:50',
-        'phone'         => 'required|string|min:5|max:50',
-        'email'         => 'required|email|min:5|max:100',
-        'message'       => 'string|min:5|max:1000',
-        'date_slot'     => 'required|string|min:16|max:16',
+        'phone'         => 'required|string|min:5|max:20',
+        'email'         => 'required|email|max:100',
+        'message'       => 'nullable|string|min:5|max:1000',
+        'date_slot'     => 'required|string|size:16',
     ];
 
     public function store(Request $request)
