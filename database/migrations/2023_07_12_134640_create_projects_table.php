@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        
+
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
 
             $table->string('name', 100);
             $table->string('slug', 100);
-            $table->string('price', 50);
+            $table->string('price', 6);
             $table->string('counter', 50);
             $table->string('visible')->default('0');
             $table->string('image')->nullable();

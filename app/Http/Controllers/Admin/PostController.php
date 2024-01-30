@@ -13,8 +13,8 @@ class PostController extends Controller
     private $validations = [
         'title'         => 'required|string|min:2|max:100',
         'description'   => 'required|string|max:2000',
-        'image'         => 'required',
-        'link'          => 'string'
+        'image'         => 'nullable|image|max:2048',
+        'link'          => 'nullable|string|max:2000'
     ];
 
     public function index()

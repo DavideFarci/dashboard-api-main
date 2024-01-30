@@ -14,10 +14,8 @@ class ProjectController extends Controller
 {
     private $validations = [
         'name'          => 'required|string|min:2|max:100',
-        'price'         => 'required|string|min:1|max:50',
-        'tags'          => 'required',
-
-       
+        'price'         => 'required|string|min:1|max:6',
+        'image'         => 'nullable|image|max:2048',
     ];
 
     public function index()
@@ -35,8 +33,8 @@ class ProjectController extends Controller
 
         return view('admin.projects.create', compact('categories', 'tags'));
     }
-    
-    
+
+
     public function store(Request $request)
     {
         $data = $request->all();
@@ -45,23 +43,23 @@ class ProjectController extends Controller
         // dump($data['category_id']);
         // if (isset($data['image'])) {
         //     dump($data['image']);
-            
+
         // }
         // dd($data['tags']);
 
-      
-            
+
+
         $request->validate($this->validations);
-        
-        
+
+
         $newProject = new Project();
-        
+
         if (isset($data['image'])) {
             $imagePath = Storage::put('public/uploads', $data['image']);
             $newProject->image = $imagePath;
         }
-        
-        
+
+
         $newProject->name          = $data['name'];
         $newProject->price         = $data['price'];
         $newProject->counter       = 0;
@@ -73,7 +71,6 @@ class ProjectController extends Controller
         $newProject->tags()->sync($data['tags'] ?? []);
 
         return redirect()->route('admin.projects.index', ['project']);
-      
     }
 
     public function show($slug)
@@ -177,7 +174,5 @@ class ProjectController extends Controller
             $project->save();
         }
         return redirect()->back();
-
-       
     }
 }
