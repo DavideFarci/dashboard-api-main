@@ -28,6 +28,7 @@ class DatesTableSeeder extends Seeder
     public function run()
     {
         $currentDate = new DateTime();
+     //   $currentDate->modify('+7 month');
         $times = $this->times;
         $abledDays = $this->days_off;
 
@@ -38,14 +39,14 @@ class DatesTableSeeder extends Seeder
         // per ogni giorno si verifica che il giorno non sia all'interno di quelli disabilitati dall'utente
         $currentMounth = $currentDate->format('n');
 
-        for ($i = $currentMounth; $i <= 12; $i++) {
+        for ($i = 1; $i <= 12; $i++) {
             $daysInMonth = $currentDate->format('t'); //n giorni nel mese
             Month::create([
                 'month' => $currentDate->format('F'),
                 'n' => $currentDate->format('n'),
                 'y' => $currentDate->format('Y'),
             ]);
-            for ($day = 1; $day <= $daysInMonth; $day++) {
+            for ($day = $currentDate->format('d'); $day <= $daysInMonth; $day++) {
                 $currentDayOfWeek = $currentDate->format('N');
 
                 Day::create([
