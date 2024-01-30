@@ -35,16 +35,23 @@ class OrderController extends Controller
 
         $arrvar = str_replace('\\', '', $data['products']);
         $arrvar2 = json_decode($arrvar, true);
+        $total_pz = 0;
 
 
         try {
             for ($i = 0; $i < count($arrvar2); ++$i) {
+                // Calcolo il numero di pezzi ordinati in base alla categoria
                 $project = Project::where('id', $arrvar2[$i]['p_id'])->first();
+                $category = Category::where('id', $project->category_id)->first();
+                if ($category->slot) {
+                    $total_pz += ($arrvar2[$i]['counter'] * $category->slot);
+                }
 
+                // Calcolo il prezzo totale (senza aggiunte)
                 $total_price += $project->price *  $arrvar2[$i]['counter'];
             }
 
-
+            // Considero le aggiunte nel prezzo totale
             for ($i = 0; $i < count($arrvar2); ++$i) {
                 for ($z = 0; $z < count($arrvar2[$i]['addicted']); $z++) {
                     $ingredient = Tag::where('name', $arrvar2[$i]['addicted'][$z])->first();
@@ -59,33 +66,29 @@ class OrderController extends Controller
             $newOrder->message       = $data['message'];
             $newOrder->date_slot     = $data['date_slot'];
             $newOrder->total_price   = $total_price;
+            $newOrder->total_pz      = $total_pz;
             $newOrder->status        = 0;
             $newOrder->save();
 
-            $pezzi = 0;
             foreach ($arrvar2 as $elem) {
                 $item_order = new OrderProject();
                 $item_order->order_id = $newOrder->id;
                 $item_order->project_id = $elem['p_id'];
                 $item_order->quantity_item = $elem['counter'];
-                $product = Project::where('id', $elem['p_id'])->first();
-                $category = Category::where('id', $product->category_id)->first();
-                if ($category->slot) {
-                    $pezzi = ($pezzi + $elem['counter']) * $category->slot;
-                }
                 $item_order->deselected = json_encode($elem['deselected']);
                 $item_order->addicted = json_encode($elem['addicted']);
                 $item_order->save();
             }
 
             $date = Date::where('id', $data['date_id'])->firstOrFail();
-            $maximum = $date->reserved_pz + $pezzi;
+            $maximum = $date->reserved_pz + $total_pz;
 
             if ($maximum <= $date->max_pz) {
-                $date->reserved_pz = $date->reserved_pz + $pezzi;
+                $date->reserved_pz += $total_pz;
                 if ($date->reserved_pz == $date->max_pz) {
                     $date->visible = 0;
                 }
+                $date->save();
             } else {
                 // se non ci sono più posti rispondo picche
                 return response()->json([
