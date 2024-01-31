@@ -15,6 +15,7 @@ class ReservationController extends Controller
     private $validations = [
         'name'      => 'required|string|max:50',
         'phone'     => 'required|string|max:20',
+        'email'     => 'required|email|max:100',
         'n_person'  => 'required|string|max:10',
         'message'   => 'nullable|string|max:1000',
         'date_slot' => 'required|string|size:16',
@@ -30,6 +31,7 @@ class ReservationController extends Controller
             $newOrder = new Reservation();
             $newOrder->name = $data['name'];
             $newOrder->phone = $data['phone'];
+            $newOrder->email = $data['email'];
             $newOrder->n_person = intval($data['n_person']);
             $newOrder->message = $data['message'];
             $newOrder->status = 0;

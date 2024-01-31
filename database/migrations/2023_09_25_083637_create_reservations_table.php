@@ -20,6 +20,7 @@ return new class extends Migration
             // $table->foreign('date_id')->references('id')->on('dates')->nullOnDelete();
             $table->string('date_slot', 16);
             $table->string('name', 50);
+            $table->string('email', 100);
             $table->string('phone', 20);
             $table->string('status', 10);
             $table->string('n_person', 10);
