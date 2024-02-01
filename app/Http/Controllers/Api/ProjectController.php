@@ -18,7 +18,7 @@ class ProjectController extends Controller
 
         $categoryId = $request->query('category');
 
-        $query = Project::with('category', 'tags');
+        $query = Project::with('category', 'tags')->where('visible', '=', 0);
 
 
         if ($categoryId) {
@@ -34,6 +34,4 @@ class ProjectController extends Controller
             'results'   => $projects,
         ]);
     }
-
-
 }

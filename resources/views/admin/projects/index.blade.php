@@ -34,7 +34,7 @@
 
             @foreach ($projects as $project)
 
-            @if($project->visible == 1)
+            @if($project->visible == 0)
             <div class="myproj">
             @else 
            
@@ -63,7 +63,7 @@
                                 @method('delete')
                                 <button class="btn btn-danger" >Elimina</button>
                             </form>
-                            @if($project->visible == 1)
+                            @if($project->visible == 0)
                             <form action="{{ route('admin.projects.updatestatus', $project->slug)}}" method="post">
                                 @csrf
 
