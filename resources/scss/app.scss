@@ -467,7 +467,40 @@ td{
 }
 
 
-
+.myres-c{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .myres{
+        display: flex;
+        flex-direction: column;
+        border:solid 2px black;
+        gap: 5px;
+        .mail-tel{
+            display: flex;
+            justify-content: space-between;
+            div{
+                padding: 10px;
+            }
+        }
+        .body{
+            display: flex;
+            justify-content: space-between;
+            section{
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .myres-center{
+                .product{
+                    display: flex;
+                }
+            }
+        }
+    }
+}
 
 @media (max-width:1050px) {
     .mycard{
