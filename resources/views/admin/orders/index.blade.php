@@ -60,10 +60,17 @@
                                 <li>{{$project->name}}
                                     @foreach ($orderProject as $oP)
                                         @if($oP->project_id == $project->id && $oP->order_id == $order->id )
-                                        <?php  $arrD= json_decode($oP->deselected) ?> 
-                                            @foreach ($arrD as $d)
+                                        <?php  $arrD= json_decode($oP->deselected);
+                                         $arrA= json_decode($oP->addicted);
+                                        ?> 
                                                 <strong>x{{$oP->quantity_item}}</strong>
+                                            @foreach ($arrD as $d)
                                                 <strong>- {{$d}}</strong>          
+                                            @endforeach
+                                          
+                                            @foreach ($arrA as $a)
+                                                
+                                                <strong>+ {{$a}}</strong>          
                                             @endforeach
                                         @endif
                                     @endforeach
