@@ -88,10 +88,17 @@ class DateController extends Controller
                 ->where('day', $day)
                 ->where('time', $time)
                 ->get();
-            return response()->json([
-                'success' => true,
-                'results' => $date,
-            ]);
+            if (!$date) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Data non trovata",
+                ]);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'results' => $date,
+                ]);
+            }
         } catch (QueryException $e) {
             return response()->json([
                 'success' => false,
