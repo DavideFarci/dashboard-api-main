@@ -62,12 +62,15 @@ Route::middleware(['auth', 'verified'])
         // Rotte Settings
         Route::put('/settings/allupdate',                    [SettingController::class, 'allupdate'])->name('settings.allupdate');
 
-        // Rotte Time
-        Route::resource('times',                             TimeController::class);
-        Route::post('/times/toggle-visibility/{time_id}',   [TimeController::class, 'toggleTimeVisibility'])->name('times.toggleTimeVisibility');
+        // // Rotte Time
+        // Route::resource('times',                             TimeController::class);
+        // Route::post('/times/toggle-visibility/{time_id}',   [TimeController::class, 'toggleTimeVisibility'])->name('times.toggleTimeVisibility');
 
-        // Rotte Slot
-        Route::post('/slots/toggle-visibility/{slot_id}',   [SlotController::class, 'toggleTimeVisibility'])->name('slots.toggleTimeVisibility');
+        // // Rotte Slot
+        // Route::post('/slots/toggle-visibility/{slot_id}',   [SlotController::class, 'toggleTimeVisibility'])->name('slots.toggleTimeVisibility');
+        
+        // Rotte Day
+        Route::get('/days/showResOr/{date_slot}',       [DayController::class, 'showResOr'])->name('days.showResOr');
 
 
         // Rotte Resource

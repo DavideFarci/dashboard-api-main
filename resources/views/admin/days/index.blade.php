@@ -4,7 +4,7 @@
 
 {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
 <?php 
-$month_name=['gennaio','febbraio',',marzo','aprile', 'maggio','giugno','luglio','agosto','settembre','ottobre','novrembre','dicembre']
+$month_name=['gennaio','febbraio','marzo','aprile', 'maggio','giugno','luglio','agosto','settembre','ottobre','novrembre','dicembre']
  ?>
 
     <h1 class="m-3">SCEGLI UN GIORNO</h1>    
@@ -30,7 +30,7 @@ $month_name=['gennaio','febbraio',',marzo','aprile', 'maggio','giugno','luglio',
                     <tr>
                         <th class="expire-mobile">{{$day->id}}</th>
                         <td>
-                            <a href="{{ route('admin.days.show', ['day' => $day])  }}" style="color:white" class="ts bs a-notlink badge bg-success rounded-pill"  > {{$day->day}} / {{$day->m}} / {{$day->y}}</a >
+                            <a href="{{ route('admin.days.show', ['day' => $day->id])  }}" style="color:white" class="ts bs a-notlink badge bg-success rounded-pill"  > {{$day->day}} / {{$day->m}} / {{$day->y}}</a >
                            
                         </td>
                     
