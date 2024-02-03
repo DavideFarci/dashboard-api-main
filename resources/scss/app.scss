@@ -260,9 +260,7 @@ td{
         display: flex;
         text-align: center;
         width: 50%;
-        .data{
-            
-        }
+    
 
         .data, .res{
             flex-grow: 1;
@@ -572,6 +570,13 @@ td{
                     align-self: flex-end;
                     font-size:  clamp(20px, 3vw, 30px);
                     font-weight: bolder;
+                }
+            }
+            .myres-center-res{
+                margin: 20px;
+                h4{
+                    font-weight: bolder;
+                    font-size: clamp(29px, 4vw, 485px);
                 }
             }
             .myres-right{

@@ -74,23 +74,11 @@
                             </div>
                             <div class="removed">
                                 
-                                <span>- asdasdasd hmgvjhffhjfjhf hjfjhfhjf hgdghdf kgjkgkugfv v gjfgjhfg</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                <span>- asdasdasda</span>
-                                {{-- @foreach ($arrD as $a)
+                             
+                                @foreach ($arrD as $a)
                                 <span>- {{$a}}</span>
                                 @endforeach       
-                                 --}}
+                                
                             </div>
                         </div>
                         

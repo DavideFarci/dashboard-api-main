@@ -3,10 +3,85 @@
 @section('contents')
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
 
+    <div class="myres-c">
 
+        @foreach ($reservations->reverse() as $reservation)
+        <?php
+
+        $data_ora = DateTime::createFromFormat('d/m/Y H:i', $reservation->date_slot);
+
+        $ora_formatata = $data_ora->format('H:i');
+        $data_formatata = $data_ora->format('d/m/Y');
+        $giorno_settimana = $data_ora->format('l');
+        ?>
+
+
+
+        @if ($reservation->status == 0)
+                            
+        <div class="myres el">
+        @elseif ($reservation->status == 1)
+        <div class="myres co">
+
+        @elseif ($reservation->status == 2)
+
+        <div class="myres an">
+        @endif
+
+            <div class="mail-tel">
+                <div class="mail">{{$reservation->email}}</div>
+                <div class="tel">{{$reservation->phone}}</div>
+            </div>
+            <div class="body">
+                <section class="myres-left">
+                    <div class="name">{{$reservation->name}}</div>
+                    <div class="time">{{$ora_formatata}}</div>
+                    <div class="day_w">{{$giorno_settimana}}</div>
+                    <div class="date">
+                        {{$data_formatata}}
+                    </div>
+                </section>
+                <section class="myres-center-res">
+                   <h5>Numero di Ospiti</h5> 
+                    <h4>{{$reservation->n_person}}</h4>
+                </section>
+                <section class="myres-right">
+
+                    <form class="d-inline w-100 " action="{{ route('admin.reservations.confirmReservation', $reservation->id) }}" method="post">
+                        @csrf
+                        <button value="1" class="w-100 btn btn-warning">
+                            Conferma
+                        </button>
+                    </form>
+                    <form class="d-inline w-100" action="{{ route('admin.reservations.rejectReservation', $reservation->id) }}" method="post">
+                        @csrf
+                        <button value="2" class="w-100 btn btn-danger">
+                            Annulla
+                        </button>
+                    </form>
+                </section>
+            </div>
+            <div class="visible">
+                @if ($reservation->status == 0)
+                    
+                <span>in elaborazione</span>
+                @elseif ($reservation->status == 1)
+                <span>confermato</span>
+                
+                @elseif ($reservation->status == 2)
+                
+                <span>annullato</span>
+                @endif
+
+            </div>
+        </div>
+
+        
+        @endforeach
+    </div>
   
 
-    <div class="row">
+    {{-- <div class="row">
         <h1 >PRENOTAZIONI TAVOLI</h1>
         <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-25 m-auto">Gestione date</a>
     </div>
@@ -77,6 +152,6 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
+    </div> --}}
     {{ $reservations->links() }}
 @endsection
