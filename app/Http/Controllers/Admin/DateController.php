@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Exception;
 use App\Models\Date;
+use App\Models\Order;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use Database\Seeders\DatesTableSeeder;
-use Illuminate\Support\Facades\Artisan;
 
 class DateController extends Controller
 {

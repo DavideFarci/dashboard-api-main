@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Date;
 use App\Models\Order;
 use App\Models\Reservation;
@@ -45,5 +46,82 @@ class ReservationController extends Controller
             $reservation->save();
         }
         return redirect("https://wa.me/" . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
+    }
+
+    public function create()
+    {
+        // Formatto la data e l'ora correnti in formato italiano
+        $dataOraFormattate = Carbon::now()->format('d-m-Y H:i:s');
+
+        // Dalla data formattata (stringa) ottengo un oggetto sul quale posso operare
+        $dataOraCarbon = Carbon::createFromFormat('d-m-Y H:i:s', $dataOraFormattate)->addDay();
+
+        // Calcolo la data di inizio considerando il giorno successivo a oggi
+        $dataInizio = $dataOraCarbon->copy()->startOfDay();
+
+        // Calcolo la data di fine considerando due mesi successivi alla data odierna
+        $dataDiFineParz = $dataInizio->copy()->startOfMonth();
+        $dataFine = $dataDiFineParz->copy()->addMonths(2)->endOfMonth();
+
+
+        // Filtro dal giorno successivo a oggi e per i due mesi successivi
+        $dates = Date::where('visible', '=', 1)
+            ->where('year', '>=', $dataInizio->year)
+            ->where('month', '>=', $dataInizio->month)
+            ->where(function ($query) use ($dataInizio) {
+                $query->where('month', '>', $dataInizio->month)
+                    ->orWhere(function ($query) use ($dataInizio) {
+                        $query->where('month', '=', $dataInizio->month)
+                            ->where('day', '>=', $dataInizio->day);
+                    });
+            })
+            ->where('year', '<=', $dataFine->year)
+            ->where('month', '<=', $dataFine->month)
+            ->get();
+
+        return view('admin.reservations.create', compact('dates'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        // dd($data);
+
+        $newReserv = new Reservation();
+        $newReserv->name = $data['name'];
+        $newReserv->phone = $data['phone'];
+        if ($data['email']) {
+            $newReserv->email = $data['email'];
+        } else {
+            $newReserv = 'email@example.com';
+        }
+        $newReserv->n_person = intval($data['n_person']);
+        $newReserv->message = $data['message'];
+        $newReserv->status = 0;
+
+        // recupero data e orario in questione 
+        $date = Date::where('id', $data['date_id'])->firstOrFail();
+        $newReserv->date_slot = $date->date_slot;
+
+        $maximum = $date->reserved + $newReserv->n_person;
+
+        if (isset($data['max_check'])) {
+            $date->reserved = $date->reserved + $newReserv->n_person;
+        } else {
+            if ($maximum <= $date->max_res) {
+                $date->reserved = $date->reserved + $newReserv->n_person;
+                if ($date->reserved >= $date->max_res) {
+                    $date->visible = 0;
+                }
+            } else {
+                return redirect()->route('admin.reservations.create')->with('max_res_check', true);
+            }
+        }
+
+        // Salvo la data e la prenotazione
+        $date->save();
+        $newReserv->save();
+
+        return redirect()->route('admin.reservations.create')->with('reserv_success', true);
     }
 }

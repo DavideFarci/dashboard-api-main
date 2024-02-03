@@ -56,7 +56,7 @@ class ReservationController extends Controller
             }
 
 
-            //invia mail
+            // invia mail
 
             // Salvo la data e la prenotazione
             $date->save();
