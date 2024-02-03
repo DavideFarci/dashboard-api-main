@@ -36,9 +36,9 @@ class OrderController extends Controller
         $arrvar = str_replace('\\', '', $data['products']);
         $arrvar2 = json_decode($arrvar, true);
         $total_pz = 0;
+       
 
-
-        try {
+       try {
             for ($i = 0; $i < count($arrvar2); ++$i) {
                 // Calcolo il numero di pezzi ordinati in base alla categoria
                 $project = Project::where('id', $arrvar2[$i]['p_id'])->first();
@@ -50,12 +50,14 @@ class OrderController extends Controller
                 // Calcolo il prezzo totale (senza aggiunte)
                 $total_price += $project->price *  $arrvar2[$i]['counter'];
             }
-
+            //$ingredient = Tag::where('name', $arrvar2[0]['addicted'][2])->first();
+            //dump($ingredient);
             // Considero le aggiunte nel prezzo totale
             for ($i = 0; $i < count($arrvar2); ++$i) {
                 for ($z = 0; $z < count($arrvar2[$i]['addicted']); $z++) {
                     $ingredient = Tag::where('name', $arrvar2[$i]['addicted'][$z])->first();
-                    $total_price += $ingredient->price * $arrvar2[$z]['counter'];
+                    $total_price += ($ingredient->price * $arrvar2[$i]['counter']);
+                    dump($total_price);
                 }
             }
 
@@ -69,7 +71,7 @@ class OrderController extends Controller
             $newOrder->total_pz      = $total_pz;
             $newOrder->status        = 0;
             $newOrder->save();
-
+   
             foreach ($arrvar2 as $elem) {
                 $item_order = new OrderProject();
                 $item_order->order_id = $newOrder->id;
@@ -101,7 +103,7 @@ class OrderController extends Controller
                 'success' => true,
                 'order' => $newOrder
             ]);
-        } catch (QueryException $e) {
+       } catch (QueryException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Errore del database: ' . $e->getMessage(),
@@ -116,8 +118,8 @@ class OrderController extends Controller
             ];
 
             return response()->json($errorInfo, 500);
-        }
+      }
 
-        // return response()->json($request->all()); // solo per debuggare
+        return response()->json($request->all()); // solo per debuggare
     }
 }
