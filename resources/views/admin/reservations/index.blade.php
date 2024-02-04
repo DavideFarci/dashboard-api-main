@@ -5,7 +5,7 @@
 
     <div class="myres-c">
 
-        @foreach ($reservations->reverse() as $reservation)
+        @foreach ($reservations as $reservation)
         <?php
 
         $data_ora = DateTime::createFromFormat('d/m/Y H:i', $reservation->date_slot);

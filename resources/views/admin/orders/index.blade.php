@@ -8,7 +8,7 @@
     <h1>PRENOTAZIONI D'ASPORTO</h1>
     <div class="myres-c">
 
-        @foreach ($orders->reverse() as $order)
+        @foreach ($orders as $order)
         <?php
 
         $data_ora = DateTime::createFromFormat('d/m/Y H:i', $order->date_slot);
