@@ -50,7 +50,8 @@ class OrderController extends Controller
                 // Calcolo il prezzo totale (senza aggiunte)
                 $total_price += $project->price *  $arrvar2[$i]['counter'];
             }
-
+            //$ingredient = Tag::where('name', $arrvar2[0]['addicted'][2])->first();
+            //dump($ingredient);
             // Considero le aggiunte nel prezzo totale
             for ($i = 0; $i < count($arrvar2); ++$i) {
                 for ($z = 0; $z < count($arrvar2[$i]['addicted']); $z++) {
@@ -118,6 +119,6 @@ class OrderController extends Controller
             return response()->json($errorInfo, 500);
         }
 
-        // return response()->json($request->all()); // solo per debuggare
+        return response()->json($request->all()); // solo per debuggare
     }
 }

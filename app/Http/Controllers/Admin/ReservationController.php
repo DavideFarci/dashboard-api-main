@@ -35,7 +35,7 @@ class ReservationController extends Controller
             $reservation->status = 1;
             $reservation->save();
         }
-        return redirect("https://wa.me/" . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+        return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
     }
 
     public function rejectReservation($reservation_id)
@@ -45,7 +45,7 @@ class ReservationController extends Controller
             $reservation->status = 2;
             $reservation->save();
         }
-        return redirect("https://wa.me/" . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
+        return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati a disdire la vostra prenotazione!");
     }
 
     public function create()

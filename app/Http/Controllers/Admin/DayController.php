@@ -30,9 +30,19 @@ class DayController extends Controller
 
     public function show($id)
     {
-        $day = day::where('id', $id)->firstOrFail();
+        $day = Day::where('id', $id)->firstOrFail();
         $dates = Date::where('day', $day->day)->where('month', $day->m)->where('year', $day->y)->paginate(100);
 
+
+        return view('admin.days.show', compact('dates'));
+   
+    }
+
+    public function showResOr($date_slot)
+    {
+        
+        $dates = Date::where('date_slot', $date_slot)->first();
+        dump( $dates);
 
         return view('admin.days.show', compact('dates'));
    

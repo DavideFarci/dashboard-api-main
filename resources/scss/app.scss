@@ -260,9 +260,7 @@ td{
         display: flex;
         text-align: center;
         width: 50%;
-        .data{
-            
-        }
+    
 
         .data, .res{
             flex-grow: 1;
@@ -467,7 +465,140 @@ td{
 }
 
 
+.myres-c{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .el{
+        background-color: #f1aa269a;
+    }
+    .co{
+        background-color: #19ea205a;
+    }
+    .an{
+        background-color: #e64f1c7a;
+    }
+    .myres{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        border:solid .1px rgba(0, 0, 0, 0.286);
+        border-radius: 10px;
+        .mail-tel{
+            border-bottom: 2px solid black;
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            div{
+                border: 2px solid black;
+                margin: 10px;
+                border-radius: 8px;
+                
+                padding: 10px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
 
+        }
+        .body{
+            
+            display: flex;
+            justify-content: space-between;
+            section{
+                width: 30%;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                
+                align-items: center;
+                gap: 10px;
+            }
+            .myres-left{
+                margin-top: 20px;
+                text-align: center;
+                font-size: clamp(17px, 1.7vw, 23px);
+                .time{
+                    font-size:  clamp(23px, 3vw, 35px);
+                    font-weight: bolder;
+                    
+                }
+                .day_w{
+                    font-style: italic;
+                    text-transform: lowercase;
+                }
+                .c_a{
+                    font-style: italic;
+                    font-size: 17px;
+                }
+            }
+            .myres-center{
+                width: 40%;
+                .product{
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    gap: 5px;
+                    width: 100%;
+                    padding: 5px;
+                    border: 1px solid black;
+                    .counter, .name{
+                        font-size: 20px;
+                        font-weight: bolder;
+                        
+                    }
+                    .name{
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                    }
+                    
+                    .variations{
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        .add, .removed{
+                            width: 45%;
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 3px;
+                            
+                            align-items: flex-start;
+                            
+                        }
+                    }
+                }
+                .t_price{
+                    align-self: flex-end;
+                    font-size:  clamp(20px, 3vw, 30px);
+                    font-weight: bolder;
+                }
+            }
+            .myres-center-res{
+                margin: 20px;
+                h4{
+                    font-weight: bolder;
+                    font-size: clamp(29px, 4vw, 485px);
+                }
+            }
+            .myres-right{
+                margin-top: 20px;
+                button{
+                    box-shadow: 0 0 15px rgba(0, 0, 0, 0.431);
+                }
+            }
+        }
+        .visible{
+            text-align: center;
+            span{
+                font-size: 19px;
+            }
+        }
+    }
+}
 
 @media (max-width:1050px) {
     .mycard{
@@ -476,6 +607,20 @@ td{
             width: 100%;
 
         } 
+    }
+    .myres{
+        .mail-tel{
+
+            flex-direction: column !important;
+        }
+        
+        .body{
+
+            flex-direction: column !important;
+            section{
+                width: 100% !important;
+            }
+        }
     }
 }
 @media (max-width:530px) {
@@ -489,7 +634,6 @@ td{
         .left-c{
             flex-direction: column;
             width: 100%;
-
         } 
     }
 }
