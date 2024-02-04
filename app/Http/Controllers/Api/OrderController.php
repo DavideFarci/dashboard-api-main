@@ -55,7 +55,7 @@ class OrderController extends Controller
             for ($i = 0; $i < count($arrvar2); ++$i) {
                 for ($z = 0; $z < count($arrvar2[$i]['addicted']); $z++) {
                     $ingredient = Tag::where('name', $arrvar2[$i]['addicted'][$z])->first();
-                    $total_price += $ingredient->price * $arrvar2[$z]['counter'];
+                    $total_price += $ingredient->price * $arrvar2[$i]['counter'];
                 }
             }
 

@@ -85,7 +85,6 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        // dd($data);
 
         $newReserv = new Reservation();
         $newReserv->name = $data['name'];

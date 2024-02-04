@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Date;
 use App\Models\Order;
 use App\Models\OrderProject;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -44,5 +46,81 @@ class OrderController extends Controller
             $order->save();
         }
         return redirect("https://wa.me/" . $order->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
+    }
+
+    public function create()
+    {
+        // Formatto la data e l'ora correnti in formato italiano
+        $dataOraFormattate = Carbon::now()->format('d-m-Y H:i:s');
+
+        // Dalla data formattata (stringa) ottengo un oggetto sul quale posso operare
+        $dataOraCarbon = Carbon::createFromFormat('d-m-Y H:i:s', $dataOraFormattate)->addDay();
+
+        // Calcolo la data di inizio considerando il giorno successivo a oggi
+        $dataInizio = $dataOraCarbon->copy()->startOfDay();
+
+        // Calcolo la data di fine considerando due mesi successivi alla data odierna
+        $dataDiFineParz = $dataInizio->copy()->startOfMonth();
+        $dataFine = $dataDiFineParz->copy()->addMonths(2)->endOfMonth();
+
+
+        // Filtro dal giorno successivo a oggi e per i due mesi successivi
+        $dates = Date::where('visible', '=', 1)
+            ->where('year', '>=', $dataInizio->year)
+            ->where('month', '>=', $dataInizio->month)
+            ->where(function ($query) use ($dataInizio) {
+                $query->where('month', '>', $dataInizio->month)
+                    ->orWhere(function ($query) use ($dataInizio) {
+                        $query->where('month', '=', $dataInizio->month)
+                            ->where('day', '>=', $dataInizio->day);
+                    });
+            })
+            ->where('year', '<=', $dataFine->year)
+            ->where('month', '<=', $dataFine->month)
+            ->get();
+
+        return view('admin.orders.create', compact('dates'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->all();
+
+        $newOrder = new Order();
+        $newOrder->name          = $data['name'];
+        $newOrder->phone         = $data['phone'];
+        if ($data['email']) {
+            $newOrder->email         = $data['email'];
+        } else {
+            $newOrder->email = 'email@example.com';
+        }
+        $newOrder->total_price   = $data['total_price'] * 100;
+        $newOrder->total_pz      = $data['total_pz'];
+        $newOrder->message       = $data['message'];
+        $newOrder->status        = 0;
+
+        $date = Date::where('id', $data['date_id'])->firstOrFail();
+        $newOrder->date_slot = $date->date_slot;
+
+        $maximum = $date->reserved_pz + $newOrder->total_pz;
+
+        if (isset($data['max_check'])) {
+            $date->reserved_pz = $date->reserved_pz + $newOrder->total_pz;
+        } else {
+            if ($maximum <= $date->max_res) {
+                $date->reserved_pz = $date->reserved_pz + $newOrder->total_pz;
+                if ($date->reserved_pz >= $date->max_res) {
+                    $date->visible = 0;
+                }
+            } else {
+                return redirect()->route('admin.orders.create')->with('max_res_check', true);
+            }
+        }
+
+        // dd("date: " . $date, "order: " . $newOrder);
+        $date->save();
+        $newOrder->save();
+
+        return redirect()->route('admin.orders.create')->with('reserv_success', true);
     }
 }
