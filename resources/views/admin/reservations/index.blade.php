@@ -40,6 +40,7 @@
                     <div class="date">
                         {{$data_formatata}}
                     </div>
+                    <div class="c_a">inviato alle: {{$reservation->created_at}}</div>
                 </section>
                 <section class="myres-center-res">
                    <h5>Numero di Ospiti</h5> 

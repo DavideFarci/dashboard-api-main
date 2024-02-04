@@ -43,6 +43,7 @@
                     <div class="date">
                         {{$data_formatata}}
                     </div>
+                    <div class="c_a">inviato alle: {{$order->created_at}}</div>
                 </section>
                 <section class="myres-center">
                     <h5>Prodotti</h5>

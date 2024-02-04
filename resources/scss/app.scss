@@ -502,11 +502,11 @@ td{
 
         }
         .body{
+            
             display: flex;
             justify-content: space-between;
             section{
-                flex-grow: 1;
-                flex-shrink: 1;
+                width: 30%;
                 padding: 10px;
                 display: flex;
                 flex-direction: column;
@@ -527,8 +527,13 @@ td{
                     font-style: italic;
                     text-transform: lowercase;
                 }
+                .c_a{
+                    font-style: italic;
+                    font-size: 17px;
+                }
             }
             .myres-center{
+                width: 40%;
                 .product{
                     display: flex;
                     justify-content: space-between;
@@ -612,6 +617,9 @@ td{
         .body{
 
             flex-direction: column !important;
+            section{
+                width: 100% !important;
+            }
         }
     }
 }
@@ -626,7 +634,6 @@ td{
         .left-c{
             flex-direction: column;
             width: 100%;
-
         } 
     }
 }
