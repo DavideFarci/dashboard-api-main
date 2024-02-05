@@ -31,21 +31,38 @@ class ReservationController extends Controller
     public function confirmReservation($reservation_id)
     {
         $reservation = Reservation::find($reservation_id);
-        if ($reservation) {
-            $reservation->status = 1;
-            $reservation->save();
+        if ($reservation && $reservation->status !== 1) {
+            
+            if ($reservation->status == 2) {
+                $reservation->status = 1;
+                $reservation->save();
+                $date = Date::where('date_slot' , $reservation->date_slot)->first();
+                $date->reserved += $reservation->n_person;
+                $date->save();
+                return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+            }else{
+                $reservation->status = 1;
+                $reservation->save();
+                return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+            }
+        }else{
+            return redirect()->back();
         }
-        return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
     }
 
     public function rejectReservation($reservation_id)
     {
         $reservation = Reservation::find($reservation_id);
-        if ($reservation) {
+        if ($reservation && $reservation->status !== 2) {
             $reservation->status = 2;
             $reservation->save();
+            $date = Date::where('date_slot' , $reservation->date_slot)->first();
+            $date->reserved -= $reservation->n_person;
+            $date->save();
+            return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati a disdire la vostra prenotazione!");
+        }else{
+            return redirect()->back();
         }
-        return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati a disdire la vostra prenotazione!");
     }
 
     public function create()

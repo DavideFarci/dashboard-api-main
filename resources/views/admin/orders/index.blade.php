@@ -89,6 +89,7 @@
                     @endif
                     @endforeach
                     <div class="t_price">€{{$order->total_price / 100}}</div>
+                    <div class="t_price">{{$order->total_pz}} pz</div>
                     
                 </section>
                 <section class="myres-right">
