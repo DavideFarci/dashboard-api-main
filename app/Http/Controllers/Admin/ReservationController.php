@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DateTime;
 use Carbon\Carbon;
 use App\Models\Date;
 use App\Models\Order;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class ReservationController extends Controller
 {
@@ -32,20 +34,20 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::find($reservation_id);
         if ($reservation && $reservation->status !== 1) {
-            
+
             if ($reservation->status == 2) {
                 $reservation->status = 1;
                 $reservation->save();
-                $date = Date::where('date_slot' , $reservation->date_slot)->first();
+                $date = Date::where('date_slot', $reservation->date_slot)->first();
                 $date->reserved += $reservation->n_person;
                 $date->save();
                 return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
-            }else{
+            } else {
                 $reservation->status = 1;
                 $reservation->save();
                 return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
             }
-        }else{
+        } else {
             return redirect()->back();
         }
     }
@@ -56,11 +58,11 @@ class ReservationController extends Controller
         if ($reservation && $reservation->status !== 2) {
             $reservation->status = 2;
             $reservation->save();
-            $date = Date::where('date_slot' , $reservation->date_slot)->first();
+            $date = Date::where('date_slot', $reservation->date_slot)->first();
             $date->reserved -= $reservation->n_person;
             $date->save();
             return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati a disdire la vostra prenotazione!");
-        }else{
+        } else {
             return redirect()->back();
         }
     }

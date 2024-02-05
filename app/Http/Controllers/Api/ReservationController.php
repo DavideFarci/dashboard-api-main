@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use DateTime;
 use Exception;
 use App\Models\Date;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 use App\Http\Controllers\Controller;
+use App\Mail\confermaPrenotazione;
+use App\Mail\confermaPrenotazioneAdmin;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Database\QueryException;
 
@@ -55,12 +61,17 @@ class ReservationController extends Controller
                 ]);
             }
 
-
-            // invia mail
-
             // Salvo la data e la prenotazione
             $date->save();
             $newOrder->save();
+
+            // invia mail
+            $mail = new confermaPrenotazione($data);
+            Mail::to($data['email'])->send($mail);
+
+            $mailAdmin = new confermaPrenotazioneAdmin($data);
+            Mail::to(env('MAIL_FROM_ADDRESS'))->send($mailAdmin);
+
 
             return response()->json([
                 'success' => true,

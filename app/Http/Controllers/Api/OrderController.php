@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use Exception;
+use App\Models\Tag;
 use App\Models\Date;
 use App\Models\Order;
 use App\Models\Project;
 use App\Models\Category;
+use App\Mail\confermaOrdine;
 use App\Models\OrderProject;
 use App\Models\projectOrder;
 use Illuminate\Http\Request;
+use App\Mail\confermaOrdineAdmin;
 use App\Http\Controllers\Controller;
-use App\Models\Tag;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 
@@ -97,6 +100,13 @@ class OrderController extends Controller
                     'message' => 'Il numero massimo di pezzi per questa data e orario è già stato raggiunto',
                 ]);
             }
+
+            $mail = new confermaOrdine($data);
+            Mail::to($data['email'])->send($mail);
+
+            $mailAdmin = new confermaOrdineAdmin($data);
+            Mail::to(env('MAIL_FROM_ADDRESS'))->send($mailAdmin);
+
             // ritornare un valore di successo al frontend
             return response()->json([
                 'success' => true,
