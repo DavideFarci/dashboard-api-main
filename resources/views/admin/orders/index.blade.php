@@ -5,7 +5,9 @@
    
 
     
-    <h1>PRENOTAZIONI D'ASPORTO</h1>
+    <h1 class="my-5">PRENOTAZIONI D'ASPORTO</h1>
+    <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-25 m-auto my-3 d-block">Gestione date</a>
+    <a  href="{{ route('admin.orders.create') }}" class="btn btn-success w-25 m-auto my-3 d-block">Nuovo Ordine</a>
     <div class="myres-c">
 
         @foreach ($orders as $order)

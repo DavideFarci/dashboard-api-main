@@ -61,7 +61,7 @@ class OrderController extends Controller
 
         // Calcolo la data di fine considerando due mesi successivi alla data odierna
         $dataDiFineParz = $dataInizio->copy()->startOfMonth();
-        $dataFine = $dataDiFineParz->copy()->addMonths(2)->endOfMonth();
+        $dataFine = $dataDiFineParz->copy()->addMonths(1)->endOfMonth();
 
 
         // Filtro dal giorno successivo a oggi e per i due mesi successivi

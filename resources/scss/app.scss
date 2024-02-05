@@ -599,7 +599,16 @@ td{
         }
     }
 }
-
+.specialradio{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+    .specialradio-b{
+        border-radius: 20px !important;
+        
+    }
+}
 @media (max-width:1050px) {
     .mycard{
         flex-direction: column;
