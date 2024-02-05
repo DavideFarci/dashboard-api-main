@@ -82,8 +82,16 @@ class OrderController extends Controller
         return view('admin.orders.create', compact('dates'));
     }
 
+    private $validations = [
+        'name'          => 'required|string|min:5|max:50',
+        'phone'         => 'required|integer',
+        'email'         => 'email|max:100',
+        'message'       => 'nullable|string|min:5|max:1000',
+        'date_id'       => 'required',
+    ];
     public function store(Request $request)
     {
+        $request->validate($this->validations);
         $data = $request->all();
 
         $newOrder = new Order();
@@ -113,7 +121,7 @@ class OrderController extends Controller
                     $date->visible = 0;
                 }
             } else {
-                return redirect()->route('admin.orders.create')->with('max_res_check', true);
+                return redirect()->route('admin.orders.create')->with(['max_res_check' => true, 'inputValues' => $data]);
             }
         }
 

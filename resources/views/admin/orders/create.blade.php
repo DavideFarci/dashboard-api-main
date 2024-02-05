@@ -11,7 +11,6 @@
     </div>
     @endif
 
-    {{-- @dd($dates); --}}
 
     <form action="{{ route('admin.orders.store') }}" enctype="multipart/form-data" method="POST" class="p-5">
         @csrf
@@ -38,10 +37,13 @@
                 class="form-control @error('name') is-invalid @enderror"
                 id="name"
                 name="name"
+                @if (session('inputValues'))
+                    value="{{ session('inputValues')['name'] }}"
+                @endif
             >
-            {{-- <div class="invalid-feedback">
+            <div class="invalid-feedback">
                 @error('name') {{ $message }} @enderror
-            </div> --}}
+            </div>
         </div>
 
         <div class="mb-5">
@@ -51,10 +53,13 @@
                 class="form-control @error('phone') is-invalid @enderror"
                 id="phone"
                 name="phone"
+                @if (session('inputValues'))
+                    value="{{ session('inputValues')['phone'] }}"
+                @endif
             >
-            {{-- <div class="invalid-feedback">
-                @error('name') {{ $message }} @enderror
-            </div> --}}
+            <div class="invalid-feedback">
+                @error('phone') {{ $message }} @enderror
+            </div>
         </div>
 
         <div class="mb-5">
@@ -64,10 +69,13 @@
                 class="form-control @error('email') is-invalid @enderror"
                 id="email"
                 name="email"
+                @if (session('inputValues.email'))
+                    value="{{ session('inputValues')['email'] }}"
+                @endif
             >
-            {{-- <div class="invalid-feedback">
-                @error('name') {{ $message }} @enderror
-            </div> --}}
+            <div class="invalid-feedback">
+                @error('email') {{ $message }} @enderror
+            </div>
         </div>
 
         <div class="mb-5">
@@ -77,10 +85,13 @@
                 class="form-control @error('total_pz') is-invalid @enderror"
                 id="total_pz"
                 name="total_pz"
+                @if (session('inputValues'))
+                    value="{{ session('inputValues')['total_pz'] }}"
+                @endif
             >
-            {{-- <div class="invalid-feedback">
-                @error('name') {{ $message }} @enderror
-            </div> --}}
+            <div class="invalid-feedback">
+                @error('total_pz') {{ $message }} @enderror
+            </div>
         </div>
 
         <div class="mb-5">
@@ -90,18 +101,31 @@
                 class="form-control @error('total_price') is-invalid @enderror"
                 id="total_price"
                 name="total_price"
+                @if (session('inputValues'))
+                    value="{{ session('inputValues')['total_price'] }}"
+                @endif
             >
-            {{-- <div class="invalid-feedback">
-                @error('name') {{ $message }} @enderror
-            </div> --}}
+            <div class="invalid-feedback">
+                @error('total_price') {{ $message }} @enderror
+            </div>
         </div>
 
         <div class="mb-5">
             <label for="message" class="form-label">Messaggio</label>
-            <textarea class="form-control" name="message" id="message" cols="30" rows="10"></textarea>
-            {{-- <div class="invalid-feedback">
-                @error('name') {{ $message }} @enderror
-            </div> --}}
+            <textarea 
+                class="form-control" 
+                name="message" 
+                id="message" 
+                cols="30" 
+                rows="10"
+            > 
+            @if (isset(session('inputValues')['message']))
+                {{ session('inputValues')['message'] }}
+            @endif
+            </textarea>
+            <div class="invalid-feedback">
+                @error('message') {{ $message }} @enderror
+            </div>
         </div>
 
         <button class="btn mb-5 w-75 m-auto btn-primary d-block">Salva</button>
@@ -109,8 +133,16 @@
 
             @foreach ($dates as $date)
             
-
-            <input type="radio" class="btn-check" name="date_id[]" value="{{$date->id}}" id="btnradio{{$date->id}}" >
+            <input 
+                type="radio" 
+                class="btn-check" 
+                name="date_id[]" 
+                value="{{$date->id}}" 
+                id="btnradio{{$date->id}}"
+                @if (session()->has('inputValues.date_id') && in_array($date->id, session('inputValues.date_id')))
+                    checked
+                @endif
+            >
             <label class="btn btn-outline-dark" for="btnradio{{$date->id}}">
                 {{$date->time}} | {{$date->day}}/{{$date->month}}/{{$date->year}} | <strong>{{$date->reserved_pz}}</strong> | max: {{$date->max_pz}}
             </label>
