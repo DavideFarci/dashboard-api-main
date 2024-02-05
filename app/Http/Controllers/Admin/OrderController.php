@@ -31,21 +31,40 @@ class OrderController extends Controller
     public function confirmOrder($order_id)
     {
         $order = Order::find($order_id);
-        if ($order) {
-            $order->status = 1;
-            $order->save();
+        if ($order&& $order->status !== 1) {
+            if ($order->status == 2) {
+                $order->status = 1;
+                $order->save();
+                $date = Date::where('date_slot' , $order->date_slot)->first();
+                $date->reserved_pz += $order->total_pz;
+                $date->save();
+                return redirect("https://wa.me/" . $order->phone . '39' . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+                
+            }else{
+                $order->status = 1;
+                $order->save();
+                return redirect("https://wa.me/" . $order->phone . '39' . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+                
+            }
+        }else{
+            return redirect()->back();
         }
-        return redirect("https://wa.me/" . $order->phone . '39' . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
     }
 
     public function rejectOrder($order_id)
     {
         $order = Order::find($order_id);
-        if ($order) {
+        if ($order && $order->status !== 2) {
             $order->status = 2;
             $order->save();
+            $date = Date::where('date_slot' , $order->date_slot)->first();
+            $date->reserved_pz -= $order->total_pz;
+            $date->save();
+
+            return redirect("https://wa.me/" . $order->phone . '39' . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
+        }else{
+            return redirect()->back();
         }
-        return redirect("https://wa.me/" . $order->phone . '39' . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
     }
 
     public function create()
