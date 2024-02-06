@@ -25,7 +25,7 @@ class confermaPrenotazione extends Mailable
     public function build()
     {
         return $this->subject('Oggetto dell\'email')
-            ->view('emails.email');
+            ->view('emails.confermaResCliente');
     }
 
     /**

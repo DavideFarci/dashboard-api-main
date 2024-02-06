@@ -9,23 +9,27 @@ use Illuminate\Queue\SerializesModels;
 class confermaOrdineAdmin extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $data;
+    public $arrvar2;
+
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $arrvar2)
     {
         $this->data = $data;
+        $this->arrvar2 = $arrvar2;
+
     }
+
 
     public function build()
     {
         return $this->subject('Oggetto dell\'email')
-            ->view('emails.email');
+            ->view('emails.confermaOrderAdmin');
     }
 
     /**

@@ -101,10 +101,10 @@ class OrderController extends Controller
                 ]);
             }
 
-            $mail = new confermaOrdine($data);
+            $mail = new confermaOrdine($data, $arrvar2);
             Mail::to($data['email'])->send($mail);
 
-            $mailAdmin = new confermaOrdineAdmin($data);
+            $mailAdmin = new confermaOrdineAdmin($data, $arrvar2);
             Mail::to(env('MAIL_FROM_ADDRESS'))->send($mailAdmin);
 
             // ritornare un valore di successo al frontend
@@ -122,8 +122,7 @@ class OrderController extends Controller
             $errorInfo = [
                 'success' => false,
                 'error' => 'Si è verificato un errore durante l\'elaborazione della richiesta: ' . $e->getMessage(),
-                'file' => $trace[0]['file'],
-                'line' => $trace[0]['line'],
+
             ];
 
             return response()->json($errorInfo, 500);

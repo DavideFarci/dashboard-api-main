@@ -65,12 +65,12 @@ class ReservationController extends Controller
             $date->save();
             $newOrder->save();
 
+            $mailAdmin = new confermaPrenotazioneAdmin($data);
+            Mail::to(env('MAIL_FROM_ADDRESS'))->send($mailAdmin);
             // invia mail
             $mail = new confermaPrenotazione($data);
             Mail::to($data['email'])->send($mail);
 
-            $mailAdmin = new confermaPrenotazioneAdmin($data);
-            Mail::to(env('MAIL_FROM_ADDRESS'))->send($mailAdmin);
 
 
             return response()->json([
